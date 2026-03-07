@@ -1,0 +1,168 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./login.css";
+import { login } from "./login.service";
+
+export default function Login() {
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  async function onSubmit(e) {
+    e.preventDefault();
+    setError("");
+
+    if (!email.trim() || !password.trim()) {
+      setError("Please enter your email and password.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const res = await login({
+        email: email.trim(),
+        password,
+      });
+
+      localStorage.setItem("access_token", res.access_token);
+      localStorage.setItem("token_type", res.token_type || "bearer");
+      localStorage.setItem("role", res.role);
+      localStorage.setItem("user_id", String(res.user_id));
+
+      if (res.role === "PM") {
+        navigate("/pm", { replace: true });
+      } else {
+        navigate("/member", { replace: true });
+      }
+    } catch (err) {
+      setError(err?.message || "Failed to login");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="login-page">
+      <section className="login-left">
+        <div>
+          <img
+            src="/cvision-logo.png"
+            alt="CVision Logo"
+            className="login-logo"
+          />
+
+          <div className="login-tagline">
+            Smart CV analysis &amp; team role distribution system
+          </div>
+        </div>
+
+        <div className="features">
+          <div className="feature">
+            <div className="feature-icon">
+              <span className="icon-target" />
+            </div>
+            <div className="feature-text">
+              <div className="feature-title">AI-Powered skills analysis</div>
+              <div className="feature-desc">
+                Automatic extraction of skills, experience, and certification
+                from CVs
+              </div>
+            </div>
+          </div>
+
+          <div className="feature">
+            <div className="feature-icon">
+              <span className="icon-team" />
+            </div>
+            <div className="feature-text">
+              <div className="feature-title">Smart role matching</div>
+              <div className="feature-desc">
+                Intelligent role distribution based on project requirements and
+                team skills
+              </div>
+            </div>
+          </div>
+
+          <div className="feature">
+            <div className="feature-icon">
+              <span className="icon-arrow" />
+            </div>
+            <div className="feature-text">
+              <div className="feature-title">Skills gap detection</div>
+              <div className="feature-desc">
+                Real-time alerts for missing skills with actionable
+                recommendations
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div />
+      </section>
+
+      <section className="login-right">
+        <div className="auth-card">
+          <div className="auth-tabs">
+            <button
+              type="button"
+              className="tab"
+              onClick={() => navigate("/signup")}
+            >
+              Sign up
+            </button>
+
+            <button
+              type="button"
+              className="tab active"
+              onClick={() => navigate("/login")}
+            >
+              Log in
+            </button>
+          </div>
+
+          <div className="form-card">
+            <div className="form-title">Welcome Back</div>
+            <div className="form-subtitle">Log in to your account</div>
+
+            <form onSubmit={onSubmit} className="form">
+              {error && <div className="form-error">✖ {error}</div>}
+
+              <label className="label">
+                Email
+                <input
+                  className="input"
+                  type="email"
+                  placeholder="email@gmail.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </label>
+
+              <label className="label">
+                Password
+                <input
+                  className="input"
+                  type="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </label>
+
+              <button type="submit" className="submit" disabled={loading}>
+                {loading ? "Logging in..." : "Log in"}
+              </button>
+
+              <div className="forgot-password">Forgot password?</div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}

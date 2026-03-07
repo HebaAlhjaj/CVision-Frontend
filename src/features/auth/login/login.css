@@ -1,0 +1,316 @@
+/* صفحة كاملة */
+.login-page {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* LEFT PANEL - مطابق للتدرج */
+.login-left {
+  width: 44%;
+  min-height: 100vh;
+  padding: 52px 48px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+
+  /* التدرج + glow بنفسجي تحت زي الصورة */
+  background:
+    radial-gradient(circle at 0% 100%, rgba(124, 70, 255, 0.55) 0%, rgba(124, 70, 255, 0.0) 58%),
+    radial-gradient(circle at 30% 80%, rgba(180, 80, 255, 0.20) 0%, rgba(180, 80, 255, 0.0) 55%),
+    linear-gradient(180deg, #030006 0%, #0d0516 35%, #1a0b2b 70%, #2a1242 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Overlay شبكة خفيفة مثل الصورة (بدون صورة خارجية) */
+.login-left::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 35%, rgba(255,255,255,0.06) 0 2px, transparent 3px) 0 0 / 60px 60px,
+    radial-gradient(circle at 55% 75%, rgba(255,255,255,0.05) 0 2px, transparent 3px) 0 0 / 70px 70px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* لو بدك شكل خطوط "شبكة" أوضح: */
+.login-left::after {
+  content: "";
+  position: absolute;
+  inset: -40px;
+  background:
+    linear-gradient(25deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.0) 55%),
+    radial-gradient(circle at 10% 85%, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.0) 60%);
+  opacity: 0.25;
+  filter: blur(0.2px);
+  pointer-events: none;
+}
+
+.login-logo {
+  height: 60px;   /* عدّل الحجم إذا حاب */
+  width: auto;
+  margin-bottom: 14px;
+}
+.login-tagline {
+  font-size: 14px;
+  opacity: 0.85;
+  letter-spacing: 0.2px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Features */
+
+
+.features {
+  margin-top: 70px;
+
+
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  position: relative;
+  z-index: 1;
+}
+
+.feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+/* أيقونات مربعة شفافة مثل الصورة */
+.feature-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.12);
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+}
+
+/* أيقونات بسيطة بـ CSS (بدون مكتبات) */
+.icon-target {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  border: 2px solid rgba(255,255,255,0.9);
+  position: relative;
+}
+.icon-target::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: 999px;
+  border: 2px solid rgba(255,255,255,0.55);
+}
+
+.icon-team {
+  width: 26px;
+  height: 18px;
+  position: relative;
+}
+.icon-team::before,
+.icon-team::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  border: 2px solid rgba(255,255,255,0.85);
+}
+.icon-team::before { left: 0; }
+.icon-team::after { right: 0; opacity: 0.75; }
+
+.icon-arrow {
+  width: 18px;
+  height: 18px;
+  border-right: 3px solid rgba(255,255,255,0.9);
+  border-top: 3px solid rgba(255,255,255,0.9);
+  transform: rotate(45deg);
+}
+
+/* نص المميزات */
+.feature-title {
+  font-size: 18px;
+  font-weight: 800; /* ✅ العنوان Bold */
+  margin-bottom: 6px;
+}
+
+.feature-desc {
+  font-size: 13px;
+  opacity: 0.88;
+  line-height: 1.45;
+  max-width: 340px;
+}
+
+/* RIGHT PANEL */
+.login-right {
+  width: 56%;
+  min-height: 100vh;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  align-items: flex-start;
+  padding: 40px;
+}
+
+/* الحاوية اللي فيها التابات + الفورم */
+.auth-card {
+  width: 520px;
+  max-width: 92%;
+}
+
+/* Tabs */
+.auth-tabs {
+  height: 52px;
+  border-radius: 999px;
+  background: #d9d9d9;
+  padding: 6px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin: 0 auto 22px auto;
+}
+
+.tab {
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: default;
+  color: #222;
+}
+
+.tab.active {
+  background: #ffffff;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.08) inset;
+}
+
+/* Form card */
+.form-card {
+  border: 1px solid rgba(0,0,0,0.10);
+  border-radius: 14px;
+  padding: 28px 28px 26px 28px;
+  background: #fff;
+}
+
+.form-title {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  color: #111;
+}
+
+.form-subtitle {
+  font-size: 13px;
+  opacity: 0.65;
+  margin-bottom: 22px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-error {
+  background: rgba(255, 0, 0, 0.06);
+  border: 1px solid rgba(255, 0, 0, 0.20);
+  color: #9a0000;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #222;
+}
+
+.input {
+  height: 46px;
+  border-radius: 12px;
+  border: none;
+  background: #e6e6e6;
+  padding: 0 16px;
+  font-size: 14px;
+  outline: none;
+}
+
+.input::placeholder {
+  color: rgba(0,0,0,0.55);
+}
+
+.submit {
+  margin-top: 8px;
+  height: 54px;
+  border-radius: 999px;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+
+  /* زر اسود بتدرج خفيف */
+  background: linear-gradient(180deg, #000 0%, #1a1a1a 100%);
+}
+
+.submit:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+.forgot-password {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(0,0,0,0.55);
+  cursor: pointer;
+  width: 100%;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+/* Responsive بسيط */
+@media (max-width: 950px) {
+  .login-page {
+    flex-direction: column;
+  }
+
+  .login-left,
+  .login-right {
+    width: 100%;
+  }
+
+  .login-right {
+    padding: 26px;
+  }
+
+}.role-btn {
+  background: #d0d0d0;   /* لون أغمق من الرمادي الحالي */
+  border: 1px solid #aaa;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.role-btn:hover {
+  background: #c2c2c2;
+}
+
+.role-btn.active {
+  background: #b8b8b8;
+  font-weight: 600;
+}
