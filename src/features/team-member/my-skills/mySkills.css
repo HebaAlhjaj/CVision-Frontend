@@ -1,0 +1,115 @@
+.team-member-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.tm-header {
+  background: white;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tm-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.tm-logo {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  background: black;
+  border-radius: 16px;
+  padding: 8px;
+}
+
+.tm-brand h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.tm-brand p {
+  margin: 4px 0 0;
+  color: #777;
+  font-size: 14px;
+}
+
+.tm-user {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: right;
+}
+
+.tm-user p {
+  margin: 4px 0 0;
+  color: #777;
+  font-size: 14px;
+}
+
+.tm-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: black;
+  color: white;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.tm-tabs {
+  margin: 28px 32px 0;
+  background: #eaeaea;
+  border-radius: 999px;
+  padding: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.tm-tab {
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  padding: 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tm-tab.active {
+  background: white;
+}
+
+.tm-content {
+  padding: 32px;
+}
+
+.tm-content h1 {
+  margin: 0 0 24px;
+  font-size: 24px;
+}
+
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.skill-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-weight: 600;
+}
+
+.error-text {
+  color: #b42318;
+}
