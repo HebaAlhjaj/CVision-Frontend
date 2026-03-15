@@ -8,6 +8,13 @@ import MyProject from "./features/team-member/my-project/MyProject";
 import UploadCV from "./features/team-member/upload-cv/UploadCV";
 import MySkills from "./features/team-member/my-skills/MySkills";
 
+import ProjectManagerLayout from "./features/project-manager/ProjectManagerLayout";
+import PMMyProject from "./features/project-manager/my-project/MyProject";
+import ProjectDetails from "./features/project-manager/project-details/ProjectDetails";
+import TeamMembers from "./features/project-manager/team-members/TeamMembers";
+import RoleMatch from "./features/project-manager/role-match/RoleMatch";
+import SkillGaps from "./features/project-manager/skill-gaps/SkillGaps";
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -17,14 +24,20 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        <Route
-          path="/team-member"
-          element={<TeamMemberLayout />}
-        >
+        <Route path="/team-member" element={<TeamMemberLayout />}>
           <Route index element={<Navigate to="my-project" replace />} />
           <Route path="my-project" element={<MyProject />} />
           <Route path="upload-cv" element={<UploadCV />} />
           <Route path="my-skills" element={<MySkills />} />
+        </Route>
+
+        <Route path="/project-manager" element={<ProjectManagerLayout />}>
+          <Route index element={<Navigate to="my-project" replace />} />
+          <Route path="my-project" element={<PMMyProject />} />
+          <Route path="project-details" element={<ProjectDetails />} />
+          <Route path="team-members" element={<TeamMembers />} />
+          <Route path="role-match" element={<RoleMatch />} />
+          <Route path="skill-gaps" element={<SkillGaps />} />
         </Route>
       </Routes>
     </BrowserRouter>
