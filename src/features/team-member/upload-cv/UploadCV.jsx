@@ -1,25 +1,63 @@
 import { useState } from "react";
 import "./uploadCV.css";
 
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8000";
+
 export default function UploadCV() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [analysisResult, setAnalysisResult] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
     setSelectedFile(file);
+    setAnalysisResult(null);
+    setError("");
 
-    if (file) {
-      setAnalysisResult({
-        fileName: file.name,
-        skills: [
-          { name: "React", score: 95 },
-          { name: "JavaScript", score: 84 },
-          { name: "TypeScript", score: 60 },
-          { name: "Next.js", score: 51 },
-          { name: "CSS", score: 94 },
-        ],
+    if (!file) return;
+
+    const token =
+      localStorage.getItem("token") || localStorage.getItem("access_token");
+
+    if (!token) {
+      setError("You are not logged in. Please log in first.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch(`${API_BASE}/cv/upload`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
       });
+
+      let data = {};
+      try {
+        data = await res.json();
+      } catch {
+        data = {};
+      }
+
+      if (!res.ok) {
+        throw new Error(data?.detail || data?.message || "CV upload failed");
+      }
+
+      setAnalysisResult({
+        fileName: data.fileName || file.name,
+        skills: Array.isArray(data.skills) ? data.skills : [],
+      });
+    } catch (err) {
+      setError(err?.message || "Failed to upload and analyze CV");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -50,13 +88,13 @@ export default function UploadCV() {
           />
 
           <label htmlFor="cvFile" className="uploadcv-file-btn">
-            Choose File
+            {loading ? "Uploading..." : "Choose File"}
           </label>
 
-          {selectedFile && (
-            <p className="file-name">{selectedFile.name}</p>
-          )}
+          {selectedFile && <p className="file-name">{selectedFile.name}</p>}
         </div>
+
+        {error && <p className="form-error">✖ {error}</p>}
       </div>
 
       {analysisResult && (

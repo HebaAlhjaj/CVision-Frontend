@@ -14,7 +14,12 @@ export default function MySkills() {
         setError("");
 
         const data = await getMySkills();
-        setSkills(data.skills || data || []);
+
+        if (Array.isArray(data)) {
+          setSkills(data);
+        } else {
+          setSkills([]);
+        }
       } catch (err) {
         setError(err?.message || "Failed to load skills");
       } finally {
@@ -30,14 +35,15 @@ export default function MySkills() {
       <h1>My Skills</h1>
 
       {loading && <p>Loading skills...</p>}
-      {error && <p className="error-text">{error}</p>}
+      {!loading && error && <p className="error-text">{error}</p>}
 
       {!loading && !error && (
         <div className="skills-grid">
           {skills.length > 0 ? (
-            skills.map((skill, index) => (
-              <div className="skill-card" key={index}>
-                {typeof skill === "string" ? skill : skill.name || "Skill"}
+            skills.map((skill) => (
+              <div className="skill-card" key={skill.name}>
+                <div className="skill-name">{skill.name}</div>
+                <div className="skill-score">{skill.score}/100</div>
               </div>
             ))
           ) : (

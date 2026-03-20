@@ -17,8 +17,6 @@ export default function MyProject() {
 
         if (Array.isArray(data)) {
           setProjects(data);
-        } else if (Array.isArray(data?.projects)) {
-          setProjects(data.projects);
         } else {
           setProjects([]);
         }
@@ -55,21 +53,16 @@ export default function MyProject() {
         <section className="tm-empty-card">
           <div className="tm-empty-icon">📁</div>
           <h3>No projects joined yet</h3>
-          <p>Use the Join Team tab to enter a team code and join a project</p>
+          <p>You are not assigned to any project yet.</p>
         </section>
       )}
 
       {!loading && !error && projects.length > 0 && (
         <section className="tm-projects-list">
           {projects.map((project) => (
-            <div
-              className="tm-project-card"
-              key={project.id || project.project_id}
-            >
-              <h3>{project.project_name || project.name || "Untitled Project"}</h3>
-              <p>
-                Role: {project.role_name || project.role || "Not assigned yet"}
-              </p>
+            <div className="tm-project-card" key={project.project_id}>
+              <h3>{project.project_name}</h3>
+              <p>Role: {project.role_name}</p>
             </div>
           ))}
         </section>

@@ -16,7 +16,9 @@ export default function Login() {
     e.preventDefault();
     setError("");
 
-    if (!email.trim() || !password.trim()) {
+    const trimmedEmail = email.trim();
+
+    if (!trimmedEmail || !password.trim()) {
       setError("Please enter your email and password.");
       return;
     }
@@ -25,19 +27,32 @@ export default function Login() {
       setLoading(true);
 
       const res = await login({
-        email: email.trim(),
+        email: trimmedEmail,
         password,
       });
 
+      if (!res?.access_token) {
+        throw new Error("No access token returned from server.");
+      }
+
+      localStorage.setItem("token", res.access_token);
       localStorage.setItem("access_token", res.access_token);
       localStorage.setItem("token_type", res.token_type || "bearer");
-      localStorage.setItem("role", res.role);
-      localStorage.setItem("user_id", String(res.user_id));
+      localStorage.setItem("role", res.role || "");
+      localStorage.setItem("user_id", String(res.user_id || ""));
 
-      if (res.role === "PM") {
-        navigate("/pm", { replace: true });
+      const role = (res.role || "").toLowerCase();
+
+      if (
+        role === "pm" ||
+        role === "project_manager" ||
+        role === "project manager"
+      ) {
+        navigate("/project-manager", { replace: true });
+      } else if (role === "team_member" || role === "member") {
+        navigate("/team-member", { replace: true });
       } else {
-        navigate("/member", { replace: true });
+        navigate("/team-member", { replace: true });
       }
     } catch (err) {
       setError(err?.message || "Failed to login");

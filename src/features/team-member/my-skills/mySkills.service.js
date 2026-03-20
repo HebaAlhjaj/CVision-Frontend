@@ -1,20 +1,34 @@
-const API_BASE = import.meta.env.VITE_API_BASE;
+const BASE_URL =
+  import.meta.env.VITE_API_BASE || "http://127.0.0.1:8000";
 
 export async function getMySkills() {
-  const token = localStorage.getItem("access_token");
+  const token =
+    localStorage.getItem("token") ||
+    localStorage.getItem("access_token");
 
-  const res = await fetch(`${API_BASE}/team-member/my-skills`, {
+  if (!token) {
+    throw new Error("No token found. Please login first.");
+  }
+
+  const response = await fetch(`${BASE_URL}/team-member/skills`, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   });
 
-  const data = await res.json().catch(() => ({}));
+  let data = {};
 
-  if (!res.ok) {
-    throw new Error(data?.detail || data?.message || "Failed to load skills");
+  try {
+    data = await response.json();
+  } catch {
+    data = {};
+  }
+
+  if (!response.ok) {
+    throw new Error(
+      data?.detail || data?.message || "Failed to load skills"
+    );
   }
 
   return data;
