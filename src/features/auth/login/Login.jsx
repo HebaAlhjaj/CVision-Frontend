@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./login.css";
 import { login } from "./login.service";
+import "./login.css";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ export default function Login() {
     const trimmedEmail = email.trim();
 
     if (!trimmedEmail || !password.trim()) {
-      setError("Please enter your email and password.");
+      setError("Please fill email and password.");
       return;
     }
 
@@ -35,7 +35,6 @@ export default function Login() {
         throw new Error("No access token returned from server.");
       }
 
-      localStorage.setItem("token", res.access_token);
       localStorage.setItem("access_token", res.access_token);
       localStorage.setItem("token_type", res.token_type || "bearer");
       localStorage.setItem("role", res.role || "");
@@ -48,14 +47,19 @@ export default function Login() {
         role === "project_manager" ||
         role === "project manager"
       ) {
-        navigate("/project-manager", { replace: true });
-      } else if (role === "team_member" || role === "member") {
-        navigate("/team-member", { replace: true });
+        navigate("/project-manager/my-project", { replace: true });
+      } else if (
+        role === "tm" ||
+        role === "team_member" ||
+        role === "team member" ||
+        role === "member"
+      ) {
+        navigate("/team-member/my-project", { replace: true });
       } else {
-        navigate("/team-member", { replace: true });
+        navigate("/team-member/my-project", { replace: true });
       }
     } catch (err) {
-      setError(err?.message || "Failed to login");
+      setError(err?.message || "Login failed");
     } finally {
       setLoading(false);
     }
@@ -70,9 +74,8 @@ export default function Login() {
             alt="CVision Logo"
             className="login-logo"
           />
-
           <div className="login-tagline">
-            Smart CV analysis &amp; team role distribution system
+            Smart CV analysis & team role distribution system
           </div>
         </div>
 
@@ -116,13 +119,14 @@ export default function Login() {
             </div>
           </div>
         </div>
-
-        <div />
       </section>
 
       <section className="login-right">
         <div className="auth-card">
           <div className="auth-tabs">
+            <button type="button" className="tab active">
+              Log in
+            </button>
             <button
               type="button"
               className="tab"
@@ -130,19 +134,13 @@ export default function Login() {
             >
               Sign up
             </button>
-
-            <button
-              type="button"
-              className="tab active"
-              onClick={() => navigate("/login")}
-            >
-              Log in
-            </button>
           </div>
 
           <div className="form-card">
             <div className="form-title">Welcome Back</div>
-            <div className="form-subtitle">Log in to your account</div>
+            <div className="form-subtitle">
+              Log in to continue using CVision
+            </div>
 
             <form onSubmit={onSubmit} className="form">
               {error && <div className="form-error">✖ {error}</div>}
@@ -172,8 +170,6 @@ export default function Login() {
               <button type="submit" className="submit" disabled={loading}>
                 {loading ? "Logging in..." : "Log in"}
               </button>
-
-              <div className="forgot-password">Forgot password?</div>
             </form>
           </div>
         </div>
