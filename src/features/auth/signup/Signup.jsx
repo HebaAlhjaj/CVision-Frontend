@@ -51,8 +51,11 @@ export default function Signup() {
       localStorage.setItem("user_id", String(res.user_id));
 
       // Redirect
-      if (res.role === "PM") navigate("/pm-dashboard", { replace: true });
-      else navigate("/member-dashboard", { replace: true });
+      if (res.role === "PM") {
+  navigate("/project-manager/my-project", { replace: true });
+} else {
+  navigate("/team-member/my-project", { replace: true });
+}
     } catch (err) {
       setError(err?.message || "Failed to create account");
     } finally {
