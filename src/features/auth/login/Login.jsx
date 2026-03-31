@@ -11,6 +11,7 @@ export default function Login() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -39,6 +40,7 @@ export default function Login() {
       localStorage.setItem("token_type", res.token_type || "bearer");
       localStorage.setItem("role", res.role || "");
       localStorage.setItem("user_id", String(res.user_id || ""));
+      localStorage.setItem("username", res.username || res.email || "");
 
       const role = (res.role || "").toLowerCase();
 

@@ -6,6 +6,10 @@ export default function TeamMemberLayout() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const usernameRaw = localStorage.getItem("username") || "User";
+  const username = usernameRaw.split("@")[0]; // إذا كان ايميل
+  const firstLetter = username.charAt(0).toUpperCase();
+
   const handleLogout = () => {
     navigate("/login");
   };
@@ -30,11 +34,11 @@ export default function TeamMemberLayout() {
 
         <div className="tm-topbar-right">
           <div className="tm-user-info">
-            <h4>Team Member</h4>
+            <h4>{username}</h4>
             <p>Dashboard</p>
           </div>
 
-          <div className="tm-avatar">T</div>
+           <div className="tm-avatar">{firstLetter}</div>
 
           <button
             className="tm-logout-btn"
