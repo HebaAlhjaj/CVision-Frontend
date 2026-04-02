@@ -8,10 +8,8 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -50,13 +48,6 @@ export default function Login() {
         role === "project manager"
       ) {
         navigate("/project-manager/my-project", { replace: true });
-      } else if (
-        role === "tm" ||
-        role === "team_member" ||
-        role === "team member" ||
-        role === "member"
-      ) {
-        navigate("/team-member/my-project", { replace: true });
       } else {
         navigate("/team-member/my-project", { replace: true });
       }
@@ -129,6 +120,7 @@ export default function Login() {
             <button type="button" className="tab active">
               Log in
             </button>
+
             <button
               type="button"
               className="tab"
@@ -172,6 +164,13 @@ export default function Login() {
               <button type="submit" className="submit" disabled={loading}>
                 {loading ? "Logging in..." : "Log in"}
               </button>
+
+              <div
+                className="forgot-password"
+                onClick={() => alert("Forgot Password coming soon")}
+              >
+                Forgot Password?
+              </div>
             </form>
           </div>
         </div>

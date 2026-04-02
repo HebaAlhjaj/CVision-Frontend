@@ -124,17 +124,21 @@ export default function Signup() {
       <section className="login-right">
         <div className="auth-card">
           <div className="auth-tabs">
-            <button type="button" className="tab active">
-              Sign up
-            </button>
-            <button
-              type="button"
-              className="tab"
-              onClick={() => navigate("/login")}
-            >
-              Log in
-            </button>
-          </div>
+  <button
+    type="button"
+    className="tab"
+    onClick={() => navigate("/login")}
+  >
+    Log in
+  </button>
+
+  <button
+    type="button"
+    className="tab active"
+  >
+    Sign up
+  </button>
+</div>
 
           <div className="form-card">
             <div className="form-title">Create New Account</div>
