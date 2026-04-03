@@ -18,12 +18,19 @@ export async function login(payload) {
     data = {};
   }
 
-  // 🔥 مهم: اطبع الريسبونس للتشخيص
   console.log("LOGIN RESPONSE:", data);
 
   if (!res.ok) {
     throw new Error(data?.detail || data?.message || "Login failed");
   }
 
-  return data;
+  // 🔥 نضمن وجود full_name
+  return {
+    ...data,
+    full_name:
+      data.full_name ||
+      data.username ||
+      data.email ||
+      "User",
+  };
 }
