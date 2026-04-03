@@ -38,7 +38,10 @@ export default function Login() {
       localStorage.setItem("token_type", res.token_type || "bearer");
       localStorage.setItem("role", res.role || "");
       localStorage.setItem("user_id", String(res.user_id || ""));
-      localStorage.setItem("username", res.username || res.email || "");
+      localStorage.setItem(
+  "full_name",
+  res.full_name || res.username || res.email || "User"
+);
 
       const role = (res.role || "").toLowerCase();
 
