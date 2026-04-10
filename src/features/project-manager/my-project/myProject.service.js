@@ -1,33 +1,47 @@
-const BASE_URL =
-  import.meta.env.VITE_API_BASE || "http://127.0.0.1:8000";
+const BASE_URL = "http://localhost:5000/projects";
 
-export async function getMyProjects() {
-  const token = localStorage.getItem("access_token");
-
-  if (!token) {
-    throw new Error("No token found. Please login first.");
-  }
-
-  const response = await fetch(`${BASE_URL}/projects/my-projects`, {
-    method: "GET",
+// Get Projects
+export const getMyProjects = async (token) => {
+  const res = await fetch(`${BASE_URL}/my-projects`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
+  return await res.json();
+};
 
-  let data = {};
+// Create Project
+export const createProject = async (data, token) => {
+  const res = await fetch(`${BASE_URL}/create`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+  return await res.json();
+};
 
-  try {
-    data = await response.json();
-  } catch {
-    data = {};
-  }
+// Invite Email
+export const inviteByEmail = async (project_id, email, token) => {
+  const res = await fetch(`${BASE_URL}/${project_id}/invite`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ email }),
+  });
+  return await res.json();
+};
 
-  if (!response.ok) {
-    throw new Error(
-      data?.detail || data?.message || "Failed to fetch projects"
-    );
-  }
-
-  return data;
-}
+// Invite Link
+export const getInviteLink = async (project_id, token) => {
+  const res = await fetch(`${BASE_URL}/${project_id}/invite-link`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return await res.json();
+};

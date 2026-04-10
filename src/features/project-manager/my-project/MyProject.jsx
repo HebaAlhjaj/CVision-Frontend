@@ -1,121 +1,168 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./myProject.css";
-import { getMyProjects } from "./myProject.service";
+import {
+  getMyProjects,
+  createProject,
+} from "./myProject.service";
 
 export default function MyProject() {
   const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [openCreate, setOpenCreate] = useState(false);
+
+  const [form, setForm] = useState({
+    name: "",
+    description: "",
+    start_date: "",
+    end_date: "",
+  });
+
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    async function loadProjects() {
-      try {
-        setLoading(true);
-        setError("");
+    const fetchProjects = async () => {
+      const data = await getMyProjects(token);
+      setProjects(data || []);
+    };
 
-        const data = await getMyProjects();
+    if (token) fetchProjects();
+  }, [token]);
 
-        if (Array.isArray(data)) {
-          setProjects(data);
-        } else if (Array.isArray(data.projects)) {
-          setProjects(data.projects);
-        } else {
-          setProjects([]);
-        }
-      } catch (err) {
-        setError(err?.message || "Failed to load projects");
-      } finally {
-        setLoading(false);
-      }
-    }
+  const handleCreate = async () => {
+    const data = {
+      name: form.name,
+      description: form.description,
+      start_date: form.start_date,
+      end_date: form.end_date,
+    };
 
-    loadProjects();
-  }, []);
+    await createProject(data, token);
 
-  function formatDate(dateString) {
-    if (!dateString) return "No deadline";
-    const date = new Date(dateString);
-    if (Number.isNaN(date.getTime())) return dateString;
-    return date.toLocaleDateString();
-  }
+    // 🔥 إضافة المشروع مباشرة (UX سريع)
+    setProjects((prev) => [
+      {
+        project_id: Date.now(),
+        name: form.name,
+        description: form.description,
+        members_count: 0,
+        roles_count: 0,
+        end_date: form.end_date,
+        status: "active",
+      },
+      ...prev,
+    ]);
+
+    setForm({
+      name: "",
+      description: "",
+      start_date: "",
+      end_date: "",
+    });
+
+    setOpenCreate(false);
+  };
 
   return (
-    <div className="my-project-page">
-      <div className="page-header">
-        <div>
-          <h1>My Project</h1>
-          <p>View all projects you're part of and your role assignment</p>
-        </div>
+    <div className="container">
+
+      {/* Header */}
+      <div className="header">
+        <h1>My Projects</h1>
+
+        <button
+          className="create-btn"
+          onClick={() => setOpenCreate(!openCreate)}
+        >
+          + Create Project
+        </button>
       </div>
 
-      {loading && <p>Loading projects...</p>}
-      {!loading && error && <p className="error-text">{error}</p>}
+      {/* 🔴 Create Form */}
+      {openCreate && (
+        <div className="create-form">
+          <h2>Create New Project</h2>
+          <p>Fill in the project details</p>
 
-      {!loading && !error && (
-        <div className="projects-grid">
-          {projects.length > 0 ? (
-            projects.map((project) => (
-              <div className="project-card" key={project.project_id}>
-                <div className="project-card-top">
-                  <div className="project-folder">📁</div>
-                  <span className={`status-badge ${project.status || "active"}`}>
-                    {project.status || "active"}
-                  </span>
-                </div>
+          <input
+            className="input-pro"
+            placeholder="Project Name"
+            value={form.name}
+            onChange={(e) =>
+              setForm({ ...form, name: e.target.value })
+            }
+          />
 
-                <h3 className="project-title">{project.name}</h3>
-                <p className="project-description">
-                  {project.description || "No description available"}
-                </p>
+          <textarea
+            className="input-pro"
+            placeholder="Project Description"
+            value={form.description}
+            onChange={(e) =>
+              setForm({ ...form, description: e.target.value })
+            }
+          />
 
-                <div className="project-meta">
-                  <div className="meta-row">
-                    <span className="meta-label">Members</span>
-                    <span className="meta-value">
-                      {project.members_count ?? 0} members
-                    </span>
-                  </div>
-
-                  <div className="meta-row">
-                    <span className="meta-label">Roles</span>
-                    <span className="meta-value">
-                      {project.roles_count ?? 0} roles defined
-                    </span>
-                  </div>
-
-                  <div className="meta-row">
-                    <span className="meta-label">Deadline</span>
-                    <span className="meta-value">
-                      {formatDate(project.end_date)}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="roles-section">
-                  <div className="roles-title">Project Roles</div>
-                  <div className="roles-list">
-                    {Array.isArray(project.roles) && project.roles.length > 0 ? (
-                      project.roles.map((role, index) => (
-                        <span className="role-chip" key={index}>
-                          {role}
-                        </span>
-                      ))
-                    ) : (
-                      <span className="no-roles">No roles defined</span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="empty-state">
-              <div className="empty-icon">📁</div>
-              <h3>No project joined yet</h3>
-              <p>Use the team invitation or join link to access a project.</p>
+          <div className="date-row">
+            <div className="date-box">
+              <label>Start Date</label>
+              <input
+                type="date"
+                className="input-pro"
+                value={form.start_date}
+                onChange={(e) =>
+                  setForm({ ...form, start_date: e.target.value })
+                }
+              />
             </div>
-          )}
+
+            <div className="date-box">
+              <label>End Date</label>
+              <input
+                type="date"
+                className="input-pro"
+                value={form.end_date}
+                min={form.start_date}
+                onChange={(e) =>
+                  setForm({ ...form, end_date: e.target.value })
+                }
+              />
+            </div>
+          </div>
+
+          <div className="actions">
+            <button
+              className="btn-cancel"
+              onClick={() => setOpenCreate(false)}
+            >
+              Cancel
+            </button>
+
+            <button
+              className="btn-create"
+              onClick={handleCreate}
+            >
+              Create Project
+            </button>
+          </div>
         </div>
       )}
+
+      {/* 🔥 Empty State */}
+      {projects.length === 0 && !openCreate && (
+        <p className="empty-text">No Projects Yet</p>
+      )}
+
+      {/* 🔥 Projects */}
+      <div className="projects">
+        {projects.map((p) => (
+          <div key={p.project_id} className="card">
+            <h3>{p.name}</h3>
+            <p>{p.description}</p>
+            <p>👥 {p.members_count} team members</p>
+            <p>⚙️ {p.roles_count} roles defined</p>
+            <p>📅 {p.end_date}</p>
+          </div>
+        ))}
+      </div>
+
     </div>
   );
 }
