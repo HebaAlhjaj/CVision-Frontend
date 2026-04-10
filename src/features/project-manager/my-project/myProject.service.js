@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000/projects";
+const BASE_URL = "http://127.0.0.1:8000/projects";
 
 // Get Projects
 export const getMyProjects = async (token) => {
