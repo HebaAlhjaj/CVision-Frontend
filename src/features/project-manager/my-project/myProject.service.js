@@ -23,25 +23,15 @@ export const createProject = async (data, token) => {
   return await res.json();
 };
 
-// Invite Email
-export const inviteByEmail = async (project_id, email, token) => {
-  const res = await fetch(`${BASE_URL}/${project_id}/invite`, {
+// 🔥 Invite by Email
+export const inviteToProject = async (projectId, email, token) => {
+  const res = await fetch(`${BASE_URL}/${projectId}/invite`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ email }),
-  });
-  return await res.json();
-};
-
-// Invite Link
-export const getInviteLink = async (project_id, token) => {
-  const res = await fetch(`${BASE_URL}/${project_id}/invite-link`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
   });
   return await res.json();
 };

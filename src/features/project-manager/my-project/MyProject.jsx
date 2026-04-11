@@ -3,11 +3,16 @@ import "./myProject.css";
 import {
   getMyProjects,
   createProject,
+  inviteToProject,
 } from "./myProject.service";
 
 export default function MyProject() {
   const [projects, setProjects] = useState([]);
   const [openCreate, setOpenCreate] = useState(false);
+
+  const [openMenuId, setOpenMenuId] = useState(null);
+  const [openShareId, setOpenShareId] = useState(null);
+  const [email, setEmail] = useState("");
 
   const [form, setForm] = useState({
     name: "",
@@ -27,6 +32,7 @@ export default function MyProject() {
     if (token) fetchProjects();
   }, [token]);
 
+  // 🔹 Create Project
   const handleCreate = async () => {
     const data = {
       name: form.name,
@@ -37,7 +43,6 @@ export default function MyProject() {
 
     await createProject(data, token);
 
-    // 🔥 إضافة المشروع مباشرة (UX سريع)
     setProjects((prev) => [
       {
         project_id: Date.now(),
@@ -61,6 +66,22 @@ export default function MyProject() {
     setOpenCreate(false);
   };
 
+  // 🔥 Invite
+  const handleInvite = async (projectId) => {
+    try {
+      await inviteToProject(projectId, email, token);
+
+      alert("Invitation sent ✅");
+
+      setEmail("");
+      setOpenShareId(null);
+
+    } catch (err) {
+      console.log(err);
+      alert("Error ❌");
+    }
+  };
+
   return (
     <div className="container">
 
@@ -76,7 +97,7 @@ export default function MyProject() {
         </button>
       </div>
 
-      {/* 🔴 Create Form */}
+      {/* Create Form */}
       {openCreate && (
         <div className="create-form">
           <h2>Create New Project</h2>
@@ -145,20 +166,63 @@ export default function MyProject() {
         </div>
       )}
 
-      {/* 🔥 Empty State */}
+      {/* Empty */}
       {projects.length === 0 && !openCreate && (
         <p className="empty-text">No Projects Yet</p>
       )}
 
-      {/* 🔥 Projects */}
+      {/* Projects */}
       <div className="projects">
         {projects.map((p) => (
           <div key={p.project_id} className="card">
+
+            {/* 🔥 3 dots */}
+            <div className="menu">
+              <button
+                onClick={() =>
+                  setOpenMenuId(
+                    openMenuId === p.project_id ? null : p.project_id
+                  )
+                }
+              >
+                ⋮
+              </button>
+
+              {openMenuId === p.project_id && (
+                <div className="dropdown">
+                  <p
+                    onClick={() => {
+                      setOpenShareId(p.project_id);
+                      setOpenMenuId(null);
+                    }}
+                  >
+                    Share
+                  </p>
+                </div>
+              )}
+            </div>
+
             <h3>{p.name}</h3>
             <p>{p.description}</p>
             <p>👥 {p.members_count} team members</p>
             <p>⚙️ {p.roles_count} roles defined</p>
             <p>📅 {p.end_date}</p>
+
+            {/* 🔥 Share Box */}
+            {openShareId === p.project_id && (
+              <div className="share-box">
+                <input
+                  placeholder="Enter email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+
+                <button onClick={() => handleInvite(p.project_id)}>
+                  Send
+                </button>
+              </div>
+            )}
+
           </div>
         ))}
       </div>
