@@ -25,23 +25,31 @@ export default function Login() {
     try {
       setLoading(true);
 
-      const token = await login({
+      const res = await login({
         email: trimmedEmail,
         password,
       });
 
-      // 🔥🔥🔥 أهم تعديل
+      // 🔥 الحل النهائي: أخذ access_token فقط
+      const token = res.access_token;
+
+      if (!token) {
+        throw new Error("Token not found!");
+      }
+
+      // 🔥 تخزين التوكن الصح
       localStorage.setItem("token", token);
 
       console.log("TOKEN SAVED:", token);
 
       // (اختياري)
-      localStorage.setItem("full_name", trimmedEmail);
+      localStorage.setItem("full_name", res.full_name || trimmedEmail);
 
       // 🔥 تحويل الصفحة
       navigate("/project-manager/my-project", { replace: true });
 
     } catch (err) {
+      console.error(err);
       setError(err?.message || "Login failed");
     } finally {
       setLoading(false);
