@@ -190,7 +190,8 @@ export default function MyProject() {
               {openMenuId === p.project_id && (
                 <div className="dropdown">
                   <p
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation(); // 🔥 يمنع الفليكر
                       setOpenShareId(p.project_id);
                       setOpenMenuId(null);
                     }}
@@ -207,41 +208,41 @@ export default function MyProject() {
             <p>⚙️ {p.roles_count} roles defined</p>
             <p>📅 {p.end_date}</p>
 
-            {/* 🔥 Share Modal */}
-            {openShareId === p.project_id && (
-              <div
-                className="share-overlay"
-                onClick={() => setOpenShareId(null)}
-              >
-                <div
-                  className="share-modal"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <h3>Share board</h3>
-
-                  <div className="share-input-row">
-                    <input
-                      placeholder="Email address or name"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-
-                    <button onClick={() => handleInvite(p.project_id)}>
-                      Share
-                    </button>
-                  </div>
-
-                  <div className="share-link">
-                    <span>🔗 Share this board with a link</span>
-                    <p>Create Link</p>
-                  </div>
-                </div>
-              </div>
-            )}
-
           </div>
         ))}
       </div>
+
+      {/* 🔥 Share Modal (خارج الماب) */}
+      {openShareId && (
+        <div
+          className="share-overlay"
+          onClick={() => setOpenShareId(null)}
+        >
+          <div
+            className="share-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3>Share board</h3>
+
+            <div className="share-input-row">
+              <input
+                placeholder="Email address or name"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+
+              <button onClick={() => handleInvite(openShareId)}>
+                Share
+              </button>
+            </div>
+
+            <div className="share-link">
+              <span>🔗 Share this board with a link</span>
+              <p>Create Link</p>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
