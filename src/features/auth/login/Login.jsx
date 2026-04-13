@@ -30,20 +30,20 @@ export default function Login() {
         password,
       });
 
-      // 🔥 الحل النهائي: أخذ access_token فقط
-      const token = res.access_token;
+      // 🔥 الحل الصح
+      const token = res;
 
       if (!token) {
         throw new Error("Token not found!");
       }
 
-      // 🔥 تخزين التوكن الصح
+      // 🔥 تخزين التوكن
       localStorage.setItem("token", token);
 
       console.log("TOKEN SAVED:", token);
 
       // (اختياري)
-      localStorage.setItem("full_name", res.full_name || trimmedEmail);
+      localStorage.setItem("full_name", trimmedEmail);
 
       // 🔥 تحويل الصفحة
       navigate("/project-manager/my-project", { replace: true });
