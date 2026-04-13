@@ -75,7 +75,6 @@ export default function MyProject() {
 
       setEmail("");
       setOpenShareId(null);
-
     } catch (err) {
       console.log(err);
       alert("Error ❌");
@@ -176,7 +175,7 @@ export default function MyProject() {
         {projects.map((p) => (
           <div key={p.project_id} className="card">
 
-            {/* 🔥 3 dots */}
+            {/* 3 dots */}
             <div className="menu">
               <button
                 onClick={() =>
@@ -208,18 +207,35 @@ export default function MyProject() {
             <p>⚙️ {p.roles_count} roles defined</p>
             <p>📅 {p.end_date}</p>
 
-            {/* 🔥 Share Box */}
+            {/* 🔥 Share Modal */}
             {openShareId === p.project_id && (
-              <div className="share-box">
-                <input
-                  placeholder="Enter email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+              <div
+                className="share-overlay"
+                onClick={() => setOpenShareId(null)}
+              >
+                <div
+                  className="share-modal"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <h3>Share board</h3>
 
-                <button onClick={() => handleInvite(p.project_id)}>
-                  Send
-                </button>
+                  <div className="share-input-row">
+                    <input
+                      placeholder="Email address or name"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+
+                    <button onClick={() => handleInvite(p.project_id)}>
+                      Share
+                    </button>
+                  </div>
+
+                  <div className="share-link">
+                    <span>🔗 Share this board with a link</span>
+                    <p>Create Link</p>
+                  </div>
+                </div>
               </div>
             )}
 
