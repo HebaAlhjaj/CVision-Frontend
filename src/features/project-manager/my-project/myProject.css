@@ -189,23 +189,28 @@
   font-size: 15px;
 }
 .share-overlay {
-  position: fixed;
+  position: fixed; /* 🔥 أهم سطر */
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
+  width: 100vw;
+  height: 100vh;
+
+  background: rgba(0, 0, 0, 0.5);
+
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+
+  z-index: 9999; /* 🔥 عشان يطلع فوق كل شي */
 }
 
 .share-modal {
   background: white;
   padding: 25px;
   border-radius: 15px;
-  width: 400px;
+  width: 420px;
+
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
 
 .share-input-row {
