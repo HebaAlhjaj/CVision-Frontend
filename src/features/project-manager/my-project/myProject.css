@@ -231,3 +231,20 @@
   border-radius: 8px;
   padding: 10px;
 }
+.create-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9998;
+}
+
+.create-overlay .create-form {
+  margin: 0;
+  z-index: 9999;
+}

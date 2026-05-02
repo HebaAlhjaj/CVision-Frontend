@@ -66,3 +66,28 @@ export const inviteToProject = async (projectId, email, token) => {
     throw err;
   }
 };
+// 🔥 Delete Project
+export const deleteProject = async (projectId, token) => {
+  const res = await fetch(`${BASE_URL}/${projectId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return await handleResponse(res);
+};
+
+// 🔥 Update Project
+export const updateProject = async (projectId, data, token) => {
+  const res = await fetch(`${BASE_URL}/${projectId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  return await handleResponse(res);
+};
