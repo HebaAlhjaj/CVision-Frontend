@@ -145,21 +145,7 @@ export default function ProjectDetails() {
           <span className="status-pill">active</span>
         </div>
 
-        <div className="team-code-box">
-          <label>Team code</label>
-          <div className="team-code-row">
-            <input readOnly value="ECOM-2024-X7Y9" />
-            <button
-              onClick={() => {
-                navigator.clipboard.writeText("ECOM-2024-X7Y9");
-                alert("Code copied ✅");
-              }}
-            >
-              Copy
-            </button>
-          </div>
-          <p>Share this code with team members so they can join the project</p>
-        </div>
+    
       </section>
 
       <section className="roles-wrapper">
