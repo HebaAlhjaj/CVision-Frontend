@@ -19,8 +19,18 @@ export const getRoles = async (projectId, token) => {
   });
 
   return await handleResponse(res);
-};
 
+};
+// Get Project Details
+export const getProject = async (projectId, token) => {
+  const res = await fetch(`${BASE_URL}/${projectId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return await handleResponse(res);
+};
 // Create Role
 export const createRole = async (projectId, data, token) => {
   const res = await fetch(`${BASE_URL}/${projectId}/roles`, {

@@ -35,8 +35,8 @@ export default function MyProject() {
     if (token) fetchProjects();
   }, [token]);
 
-  // 🔹 Create Project
   const handleCreate = async () => {
+  try {
     const data = {
       name: form.name,
       description: form.description,
@@ -44,30 +44,17 @@ export default function MyProject() {
       end_date: form.end_date,
     };
 
-   
-    await createProject(data, token);
+    const createdProject = await createProject(data, token);
 
-    setProjects((prev) => [
-      {
-        project_id: Date.now(),
-        name: form.name,
-        description: form.description,
-        members_count: 0,
-        roles_count: 0,
-        end_date: form.end_date,
-        status: "active",
-      },
-      ...prev,
-    ]);
+    localStorage.setItem("project_id", createdProject.project_id);
 
-    setForm({
-      name: "",
-      description: "",
-      start_date: "",
-      end_date: "",
-    });
-setOpenCreate(false);
+    window.location.href = "/project-manager/project-details";
+  } catch (err) {
+  console.log("CREATE PROJECT ERROR:", err);
+  alert(err.message || "Failed to create project");
+}
 };
+  
   const handleDelete = async (projectId) => {
   const confirmDelete = window.confirm(
     "Are you sure you want to delete this project?"
@@ -223,54 +210,62 @@ const handleUpdate = async (project) => {
 {/* Projects */}
 <div className="projects">
   {projects.map((p) => (
-    <div key={p.project_id} className="card">
-      {/* 3 dots */}
-      <div className="menu">
-        <button
-          onClick={() =>
-            setOpenMenuId(
-              openMenuId === p.project_id ? null : p.project_id
-            )
-          }
-        >
-          ⋮
-        </button>
+    <div
+  key={p.project_id}
+  className="card"
+  onClick={() => {
+    localStorage.setItem("project_id", p.project_id);
+    window.location.href = "/project-manager/project-details";
+  }}
+>
+  {/* 3 dots */}
+<div className="menu">
+  <button
+    onClick={(e) => {
+      e.stopPropagation();
 
-        {openMenuId === p.project_id && (
-          <div className="dropdown">
-            <p
-              onClick={(e) => {
-                e.stopPropagation();
-                setOpenShareId(p.project_id);
-                setOpenMenuId(null);
-              }}
-            >
-              Share
-            </p>
+      setOpenMenuId(
+        openMenuId === p.project_id ? null : p.project_id
+      );
+    }}
+  >
+    ⋮
+  </button>
 
-            <p
-              onClick={(e) => {
-                e.stopPropagation();
-                handleUpdate(p);
-                setOpenMenuId(null);
-              }}
-            >
-              Update
-            </p>
+  {openMenuId === p.project_id && (
+    <div className="dropdown">
+      <p
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpenShareId(p.project_id);
+          setOpenMenuId(null);
+        }}
+      >
+        Share
+      </p>
 
-            <p
-              onClick={(e) => {
-                e.stopPropagation();
-                handleDelete(p.project_id);
-                setOpenMenuId(null);
-              }}
-            >
-              Delete
-            </p>
-          </div>
-        )}
-      </div>
+      <p
+        onClick={(e) => {
+          e.stopPropagation();
+          handleUpdate(p);
+          setOpenMenuId(null);
+        }}
+      >
+        Update
+      </p>
 
+      <p
+        onClick={(e) => {
+          e.stopPropagation();
+          handleDelete(p.project_id);
+          setOpenMenuId(null);
+        }}
+      >
+        Delete
+      </p>
+    </div>
+  )}
+</div>
       <h3>{p.name}</h3>
       <p>{p.description}</p>
       <p>👥 {p.members_count} team members</p>
@@ -329,5 +324,6 @@ const handleUpdate = async (project) => {
       )}
 
     </div>
+    
   );
 }

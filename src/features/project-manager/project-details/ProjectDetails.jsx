@@ -1,45 +1,23 @@
 import React, { useEffect, useState } from "react";
 import "./projectDetails.css";
-import { getRoles, createRole, deleteRole } from "./projectDetails.service";
+import {
+  getRoles,
+  createRole,
+  deleteRole,
+  getProject,
+} from "./projectDetails.service";
 
-const defaultRoles = [
-  {
-    role_id: 1,
-    name: "Frontend Developer",
-    skills: [
-      { name: "React", weight: 10 },
-      { name: "TypeScript", weight: 9 },
-      { name: "CSS", weight: 8 },
-      { name: "Redux", weight: 7 },
-    ],
-  },
-  {
-    role_id: 2,
-    name: "Backend Developer",
-    skills: [
-      { name: "Node.js", weight: 10 },
-      { name: "REST API", weight: 9 },
-      { name: "Express", weight: 7 },
-      { name: "MongoDB", weight: 8 },
-    ],
-  },
-  {
-    role_id: 3,
-    name: "UI/UX Designer",
-    skills: [
-      { name: "Figma", weight: 10 },
-      { name: "User Research", weight: 8 },
-      { name: "UI/UX", weight: 9 },
-      { name: "Prototyping", weight: 7 },
-    ],
-  },
-];
+
+
+
 
 export default function ProjectDetails() {
   const token = localStorage.getItem("token");
-  const projectId = localStorage.getItem("project_id") || 1;
+ const projectId = localStorage.getItem("project_id");
 
-  const [roles, setRoles] = useState(defaultRoles);
+ const [roles, setRoles] = useState([]);
+  const [project, setProject] = useState(null);
+
   const [openModal, setOpenModal] = useState(false);
   const [roleName, setRoleName] = useState("");
   const [skills, setSkills] = useState([{ name: "", weight: 5 }]);
@@ -50,17 +28,28 @@ export default function ProjectDetails() {
 
     try {
       const data = await getRoles(projectId, token);
-      if (Array.isArray(data) && data.length > 0) {
-        setRoles(data);
-      }
+      if (Array.isArray(data)) {
+  setRoles(data);
+}
     } catch (err) {
       console.log("Backend not available, showing default roles");
     }
   };
+  const fetchProject = async () => {
+  if (!token || !projectId) return;
 
-  useEffect(() => {
-    fetchRoles();
-  }, []);
+  try {
+    const data = await getProject(projectId, token);
+    setProject(data);
+  } catch (err) {
+    console.log("Failed to fetch project", err);
+  }
+};
+
+ useEffect(() => {
+  fetchProject();
+  fetchRoles();
+}, []);
 
   const addSkill = () => {
     setSkills((prev) => [...prev, { name: "", weight: 5 }]);
@@ -95,20 +84,10 @@ export default function ProjectDetails() {
     try {
       setLoading(true);
 
-      if (token) {
-        await createRole(projectId, data, token);
-        await fetchRoles();
-      } else {
-        setRoles((prev) => [
-          ...prev,
-          {
-            role_id: Date.now(),
-            name: data.name,
-            skills: data.skills,
-          },
-        ]);
-      }
-
+     if (token) {
+  await createRole(projectId, data, token);
+  await fetchRoles();
+}
       setRoleName("");
       setSkills([{ name: "", weight: 5 }]);
       setOpenModal(false);
@@ -138,11 +117,24 @@ export default function ProjectDetails() {
     <div className="details-page">
       <section className="project-summary-card">
         <div className="summary-top">
-          <div>
-            <h2>E-Commerce Platform</h2>
-            <p>Building a modern e-commerce platform with React and Node.js</p>
-          </div>
-          <span className="status-pill">active</span>
+         <div>
+  <h2>{project?.name}</h2>
+  <p>{project?.description}</p>
+
+  <div className="project-dates">
+    <span>
+      <strong>Start:</strong> {project?.start_date}
+    </span>
+
+    <span>
+      <strong>End:</strong> {project?.end_date}
+    </span>
+  </div>
+</div>
+
+<span className="status-pill">
+  {project?.status || "active"}
+</span>
         </div>
 
     

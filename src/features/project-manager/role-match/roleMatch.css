@@ -1,0 +1,45 @@
+.role-match-page {
+  padding: 40px;
+  background: #fafafa;
+  min-height: 100vh;
+}
+
+.role-match-page h1 {
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.role-match-page > p {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.match-role-card {
+  background: #f5edf7;
+  border-radius: 18px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.match-role-card h2 {
+  margin: 0 0 12px;
+}
+
+.required-skills span {
+  display: inline-block;
+  background: #020015;
+  color: white;
+  border-radius: 999px;
+  padding: 6px 12px;
+  margin: 5px;
+  font-size: 12px;
+}
+
+.candidate-card,
+.no-match {
+  background: white;
+  border-radius: 14px;
+  padding: 18px;
+  margin-top: 16px;
+  text-align: center;
+}

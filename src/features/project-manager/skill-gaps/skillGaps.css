@@ -1,0 +1,83 @@
+.skill-gaps-page {
+  padding: 40px;
+  background: #fafafa;
+  min-height: 100vh;
+}
+
+.skill-gaps-page h1 {
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.skill-gaps-page > p {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-bottom: 35px;
+}
+
+.summary-card {
+  background: #f5edf7;
+  border-radius: 18px;
+  padding: 22px;
+}
+
+.summary-card h3 {
+  font-size: 28px;
+  margin: 0;
+}
+
+.summary-card p {
+  margin: 8px 0 0;
+  color: #555;
+}
+
+.gap-card {
+  background: #f5edf7;
+  border-radius: 18px;
+  padding: 24px;
+  margin-bottom: 28px;
+}
+
+.gap-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gap-header h2 {
+  margin: 0;
+}
+
+.gap-header span {
+  background: #ff304f;
+  color: white;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.missing-skills span {
+  display: inline-block;
+  background: #ff304f;
+  color: white;
+  border-radius: 999px;
+  padding: 6px 12px;
+  margin: 5px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.action-box {
+  background: white;
+  border: 1px solid #999;
+  border-radius: 10px;
+  padding: 14px;
+  margin-top: 10px;
+}

@@ -34,7 +34,7 @@ export default function App() {
         <Route path="/project-manager" element={<ProjectManagerLayout />}>
           <Route index element={<Navigate to="my-project" replace />} />
           <Route path="my-project" element={<PMMyProject />} />
-          <Route path="project-details" element={<ProjectDetails />} />
+         <Route path="project-details" element={<ProjectDetails />} />
           <Route path="team-members" element={<TeamMembers />} />
           <Route path="role-match" element={<RoleMatch />} />
           <Route path="skill-gaps" element={<SkillGaps />} />
