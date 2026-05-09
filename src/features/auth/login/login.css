@@ -11,15 +11,15 @@
   width: 44%;
   min-height: 100vh;
   padding: 52px 48px;
-  color: #fff;
+  color: #F5F7FA;
   position: relative;
   overflow: hidden;
 
   /* التدرج + glow بنفسجي تحت زي الصورة */
   background:
-    radial-gradient(circle at 0% 100%, rgba(124, 70, 255, 0.55) 0%, rgba(124, 70, 255, 0.0) 58%),
-    radial-gradient(circle at 30% 80%, rgba(180, 80, 255, 0.20) 0%, rgba(180, 80, 255, 0.0) 55%),
-    linear-gradient(180deg, #030006 0%, #0d0516 35%, #1a0b2b 70%, #2a1242 100%);
+    radial-gradient(circle at 0% 100%,rgba(142, 160, 181, 0.30) 0%, rgba(142, 160, 181, 0) 58%),
+    radial-gradient(circle at 30% 80%,rgba(199, 206, 216, 0.12) 0%, rgba(199, 206, 216, 0) 55%),
+    linear-gradient(180deg, #142B46 0%, #2E435E 100%);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -43,9 +43,9 @@
   position: absolute;
   inset: -40px;
   background:
-    linear-gradient(25deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.0) 55%),
-    radial-gradient(circle at 10% 85%, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.0) 60%);
-  opacity: 0.25;
+    linear-gradient(25deg,rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 55%),
+    radial-gradient(circle at 10% 85%, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 60%);
+
   filter: blur(0.2px);
   pointer-events: none;
 }
@@ -57,6 +57,7 @@
 }
 .login-tagline {
   font-size: 14px;
+  color: #C7CED8;
   opacity: 0.85;
   letter-spacing: 0.2px;
   position: relative;
@@ -68,8 +69,6 @@
 
 .features {
   margin-top: 70px;
-
-
   display: flex;
   flex-direction: column;
   gap: 36px;
@@ -141,6 +140,7 @@
   font-size: 18px;
   font-weight: 800; /* ✅ العنوان Bold */
   margin-bottom: 6px;
+  color: #FFFFFF;
 }
 
 .feature-desc {
@@ -154,7 +154,7 @@
 .login-right {
   width: 56%;
   min-height: 100vh;
-  background: #ffffff;
+  background: #F2F2F2;
   display: flex;
   align-items: center;
   align-items: flex-start;
@@ -171,7 +171,7 @@
 .auth-tabs {
   height: 52px;
   border-radius: 999px;
-  background: #d9d9d9;
+  background: #8EA0B5;
   padding: 6px;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -185,34 +185,36 @@
   border-radius: 999px;
   font-weight: 600;
   cursor: pointer;
-  color: #222;
+  color: #142B46;
   transition: all 0.2s ease;
 }
 
 
 .tab.active {
   background: #ffffff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  box-shadow:0 2px 6px rgba(20, 43, 70, 0.15);
 }
 
 
 /* Form card */
 .form-card {
-  border: 1px solid rgba(0,0,0,0.10);
+  border: 1px solid #AEB7C2;
   border-radius: 14px;
   padding: 28px 28px 26px 28px;
-  background: #fff;
+  background: #F8F8F8;
+  box-shadow: 0 8px 24px rgba(20, 43, 70, 0.08);
 }
 
 .form-title {
   font-size: 22px;
   font-weight: 800;
   margin-bottom: 6px;
-  color: #111;
+  color: #2D3748;
 }
 
 .form-subtitle {
   font-size: 13px;
+  color: #6E8096;
   opacity: 0.65;
   margin-bottom: 22px;
 }
@@ -224,8 +226,8 @@
 }
 
 .form-error {
-  background: rgba(255, 0, 0, 0.06);
-  border: 1px solid rgba(255, 0, 0, 0.20);
+  background: rgba(154, 0, 0, 0.06);
+  border: 1px solid rgba(154, 0, 0, 0.20);
   color: #9a0000;
   padding: 10px 12px;
   border-radius: 10px;
@@ -238,13 +240,13 @@
   gap: 10px;
   font-size: 13px;
   font-weight: 600;
-  color: #222;
+  color: #2D3748;
 }
 
 .input {
   height: 46px;
   border-radius: 12px;
-  border: none;
+  border: 2px solid #AEB7C2;
   background: #e6e6e6;
   padding: 0 16px;
   font-size: 14px;
@@ -252,7 +254,7 @@
 }
 
 .input::placeholder {
-  color: rgba(0,0,0,0.55);
+   color: #9AA4B2;
 }
 
 .submit {
@@ -266,7 +268,7 @@
   cursor: pointer;
 
   /* زر اسود بتدرج خفيف */
-  background: linear-gradient(180deg, #000 0%, #1a1a1a 100%);
+ background: #16314D;
 }
 
 .submit:disabled {
@@ -277,13 +279,14 @@
   margin-top: 12px;
   text-align: center;
   font-size: 14px;
-  color: rgba(0,0,0,0.55);
+  color: #6E8096;
   cursor: pointer;
   width: 100%;
 }
 
 .forgot-password:hover {
   text-decoration: underline;
+  color: #16314D;
 }
 /* Responsive بسيط */
 @media (max-width: 950px) {
@@ -321,7 +324,7 @@
   margin-bottom: 10px;
   text-align: center;
   font-size: 14px;
-  color: rgba(0,0,0,0.55);
+  color: #6E8096;
   cursor: pointer;
   width: 100%;
 }
