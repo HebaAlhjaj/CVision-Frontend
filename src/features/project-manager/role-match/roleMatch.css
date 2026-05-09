@@ -1,7 +1,8 @@
 .role-match-page {
   padding: 40px;
-  background: #fafafa;
+  background: #DCE3E8;
   min-height: 100vh;
+  color: #142B46;
 }
 
 .role-match-page h1 {
@@ -10,25 +11,28 @@
 }
 
 .role-match-page > p {
-  color: #666;
+  color: #2E435E;
   margin-bottom: 30px;
 }
 
 .match-role-card {
-  background: #f5edf7;
+  background:  #FFFFFF;
+  border: 1px solid #C7CED8;
   border-radius: 18px;
   padding: 24px;
   margin-bottom: 24px;
+  box-shadow: 0 8px 24px rgba(20, 43, 70, 0.08);
 }
 
 .match-role-card h2 {
   margin: 0 0 12px;
+  color: #142B46;
 }
 
 .required-skills span {
   display: inline-block;
-  background: #020015;
-  color: white;
+   background: #16314D;
+  color: #FFFFFF;
   border-radius: 999px;
   padding: 6px 12px;
   margin: 5px;
@@ -37,7 +41,8 @@
 
 .candidate-card,
 .no-match {
-  background: white;
+  background:  #E9EEF4;
+  border: 1px solid #C7CED8;
   border-radius: 14px;
   padding: 18px;
   margin-top: 16px;

@@ -1,16 +1,18 @@
 .skill-gaps-page {
   padding: 40px;
-  background: #fafafa;
+  background: #DCE3E8;
   min-height: 100vh;
+  color: #142B46;
 }
 
 .skill-gaps-page h1 {
   font-size: 32px;
   font-weight: 800;
+  color: #142B46;
 }
 
 .skill-gaps-page > p {
-  color: #666;
+  color: #2E435E;
   margin-bottom: 30px;
 }
 
@@ -22,7 +24,8 @@
 }
 
 .summary-card {
-  background: #f5edf7;
+  background:  #FFFFFF;
+  border: 1px solid #C7CED8;
   border-radius: 18px;
   padding: 22px;
 }
@@ -34,14 +37,16 @@
 
 .summary-card p {
   margin: 8px 0 0;
-  color: #555;
+  color: #2E435E;
 }
 
 .gap-card {
-  background: #f5edf7;
+  background:  #FFFFFF;
+  border: 1px solid #C7CED8;
   border-radius: 18px;
   padding: 24px;
   margin-bottom: 28px;
+  box-shadow: 0 8px 24px rgba(20, 43, 70, 0.08);
 }
 
 .gap-header {
@@ -55,7 +60,7 @@
 }
 
 .gap-header span {
-  background: #ff304f;
+  background: #B42318;
   color: white;
   border-radius: 999px;
   padding: 6px 12px;
@@ -65,7 +70,7 @@
 
 .missing-skills span {
   display: inline-block;
-  background: #ff304f;
+  background: #B42318;
   color: white;
   border-radius: 999px;
   padding: 6px 12px;
@@ -76,7 +81,7 @@
 
 .action-box {
   background: white;
-  border: 1px solid #999;
+  border: 1px solid #C7CED8;
   border-radius: 10px;
   padding: 14px;
   margin-top: 10px;

@@ -1,5 +1,5 @@
 .team-members-page {
-  background: #fafafa;
+  background: #DCE3E8;
   min-height: 100vh;
   padding: 40px 70px;
   font-family: Arial, sans-serif;
@@ -9,7 +9,7 @@
   font-size: 30px;
   font-weight: 800;
   margin-bottom: 10px;
-  color: #111;
+  color:  #142B46;
 }
 
 .members-list {
@@ -20,23 +20,25 @@
 }
 
 .member-card {
-  background: #f3edf7;
+  background: #FFFFFF;
   border-radius: 18px;
   padding: 24px;
   transition: 0.2s ease;
   border: 1px solid transparent;
+   box-shadow: 0 8px 24px rgba(20, 43, 70, 0.08);
 }
 
 .member-card:hover {
   transform: translateY(-4px);
-  border-color: #d6cde2;
+  border-color: #8EA0B5;
+  box-shadow: 0 14px 32px rgba(20, 43, 70, 0.12);
 }
 
 .member-avatar {
   width: 58px;
   height: 58px;
   border-radius: 50%;
-  background: #020015;
+  background: #16314D;
   color: white;
   display: flex;
   align-items: center;
@@ -49,12 +51,12 @@
 .member-card h3 {
   margin: 0 0 10px;
   font-size: 20px;
-  color: #111;
+  color: #142B46;
 }
 
 .member-card p {
   margin: 0;
-  color: #666;
+  color: #2E435E;
   font-size: 14px;
 }
 
@@ -67,9 +69,9 @@
 }
 
 .error-text {
-  color: crimson;
+  color: #B42318;
 }
 
 .empty-text {
-  color: #777;
+  color:  #2E435E;
 }

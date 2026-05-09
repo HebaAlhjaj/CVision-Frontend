@@ -1,6 +1,6 @@
 .container {
   padding: 40px;
-  background: #f5f6f8;
+  background: #DCE3E8;
   min-height: 100vh;
   font-family: Arial;
 }
@@ -14,8 +14,8 @@
 
 .create-btn {
   padding: 10px 15px;
-  background: black;
-  color: white;
+  background: #16314D;
+  color: #FFFFFF;
   border-radius: 12px;
   border: none;
   cursor: pointer;
@@ -28,16 +28,17 @@
   border-radius: 20px;
   max-width: 500px;
   margin: 25px auto;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.20);
+  box-shadow: 0 8px 24px rgba(20, 43, 70, 0.08);
 }
 
 .create-form h2 {
   font-size: 22px;
   margin-bottom: 5px;
+  color: #142B46;
 }
 
 .create-form p {
-  color: #777;
+  color: #2E435E;
   margin-bottom: 15px;
 }
 
@@ -46,16 +47,17 @@
   width: 100%;
   padding: 12px;
   border-radius: 12px;
-  border: 1px solid #e0e0e0;
-  background: #f9f9f9;
+  border: 1px solid #C7CED8;
+  background: #FFFFFF;
+  color: #142B46;
   margin-top: 8px;
   margin-bottom: 15px;
 }
 
 .input-pro:focus {
   outline: none;
-  border-color: black;
-  background: white;
+  border-color: #16314D;
+  background: #FFFFFF;
 }
 
 /* Dates */
@@ -70,7 +72,7 @@
 
 .date-box label {
   font-size: 13px;
-  color: #666;
+  color: #2E435E;
   margin-bottom: 5px;
   display: block;
 }
@@ -85,16 +87,17 @@
 .btn-cancel {
   padding: 10px 15px;
   border-radius: 12px;
-  background: #eee;
-  border: none;
+  background: #E9EEF4;
+  color: #142B46;
+  border: 1px solid #C7CED8;
   cursor: pointer;
 }
 
 .btn-create {
   padding: 10px 15px;
   border-radius: 12px;
-  background: black;
-  color: white;
+  background: #16314D;
+  color: #FFFFFF;
   border: none;
   cursor: pointer;
 }
@@ -114,13 +117,13 @@
   border-radius: 15px;
   width: 250px;
   position: relative; /* 🔥 مهم للـ menu */
-  box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 24px rgba(20, 43, 70, 0.08);
   transition: 0.3s;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  box-shadow: 0 20px 50px rgba(20, 43, 70, 0.35);
 }
 
 /* 🔥 Menu (3 dots) */
@@ -145,17 +148,18 @@
   background: white;
   padding: 6px 12px;
   border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 24px rgba(20, 43, 70, 0.12);
   z-index: 10;
 }
 
 .dropdown p {
   cursor: pointer;
   margin: 0;
+  color: #142B46;
 }
 
 .dropdown p:hover {
-  color: black;
+  color: #16314D;
   font-weight: bold;
 }
 
@@ -170,13 +174,14 @@
   flex: 1;
   padding: 8px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #C7CED8;
+  color: #142B46;
 }
 
 .share-box button {
   padding: 8px;
-  background: black;
-  color: white;
+  background: #16314D;
+  color: #FFFFFF;
   border-radius: 8px;
   border: none;
   cursor: pointer;
@@ -185,7 +190,7 @@
 /* Empty */
 .empty-text {
   margin-top: 20px;
-  color: #777;
+  color: #2E435E;
   font-size: 15px;
 }
 .share-overlay {
@@ -195,7 +200,7 @@
   width: 100vw;
   height: 100vh;
 
-  background: rgba(0, 0, 0, 0.5);
+ background: rgba(20, 43, 70, 0.45);
 
   display: flex;
   justify-content: center;
@@ -212,6 +217,7 @@
 
   position: relative;
   z-index: 100000; /* 🔥 أعلى من كل شيء */
+  box-shadow: 0 14px 32px rgba(20, 43, 70, 0.18);
 }
 
 .share-input-row {
@@ -226,8 +232,8 @@
 }
 
 .share-input-row button {
-  background: #1976d2;
-  color: white;
+  background: #16314D;
+  color: #FFFFFF;
   border-radius: 8px;
   padding: 10px;
 }
@@ -237,7 +243,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(20, 43, 70, 0.45);
   display: flex;
   justify-content: center;
   align-items: center;

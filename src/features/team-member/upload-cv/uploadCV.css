@@ -10,23 +10,25 @@
   margin: 0 0 6px;
   font-size: 32px;
   font-weight: 800;
-  color: #111111;
+  color: #142B46;
 }
 
 .uploadcv-header p {
   margin: 0;
   font-size: 13px;
-  color: #7a7a7a;
+  color: #2E435E;
 }
 
 .uploadcv-box {
   width: 100%;
   max-width: 760px;
   margin: 0 auto 26px;
-  background: #f3edf3;
+  background: #FFFFFF;
+  border: 1px solid #C7CED8;
   border-radius: 16px;
   padding: 38px 24px 34px;
   text-align: center;
+  box-shadow: 0 8px 24px rgba(20, 43, 70, 0.06);
 }
 
 .uploadcv-icon-circle {
@@ -34,7 +36,7 @@
   height: 64px;
   margin: 0 auto 18px;
   border-radius: 50%;
-  background: #fdfdfd;
+  background: #E9EEF4;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -43,20 +45,20 @@
 
 .uploadcv-icon {
   font-size: 28px;
-  color: #111111;
+  color: #16314D;
 }
 
 .uploadcv-box h3 {
   margin: 0 0 8px;
   font-size: 18px;
   font-weight: 700;
-  color: #111111;
+  color: #142B46;
 }
 
 .uploadcv-box-text {
   margin: 0 0 20px;
   font-size: 12px;
-  color: #777777;
+  color: #6E8096;
 }
 
 .uploadcv-file-row {
@@ -71,48 +73,49 @@
   height: 32px;
   padding: 0 18px;
   border-radius: 999px;
-  background: #ffffff;
+  background: #16314D;
   border: 1px solid #d9d9d9;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-size: 12px;
   font-weight: 600;
-  color: #111111;
+  color: #FFFFFF;
   cursor: pointer;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .uploadcv-file-btn:hover {
-  background: #fafafa;
+  background: #142B46;
 }
 
 .file-name {
   margin: 0;
   font-size: 12px;
-  color: #666666;
+  color: #6E8096;
 }
 
 .analysis-box {
   width: 100%;
   max-width: 760px;
   margin: 0 auto;
-  background: #f3edf3;
+  background:  #FFFFFF;
   border-radius: 16px;
   padding: 24px 22px;
+  box-shadow: 0 8px 24px rgba(20, 43, 70, 0.06);
 }
 
 .analysis-box h3 {
   margin: 0 0 8px;
   font-size: 20px;
   font-weight: 700;
-  color: #111111;
+  color:  #142B46;
 }
 
 .analysis-box p {
   margin: 4px 0;
   font-size: 13px;
-  color: #666666;
+  color: #2E435E;
 }
 
 .skills-section {
@@ -122,7 +125,7 @@
 .skills-section h4 {
   margin: 0 0 14px;
   font-size: 15px;
-  color: #111111;
+  color: #142B46;
 }
 
 .skill-item {
@@ -136,19 +139,19 @@
   margin-bottom: 6px;
   font-size: 13px;
   font-weight: 600;
-  color: #111111;
+  color: #142B46;
 }
 
 .skill-bar {
   width: 100%;
   height: 10px;
   border-radius: 999px;
-  background: #ddd7dd;
+  background: #C7CED8;
   overflow: hidden;
 }
 
 .skill-fill {
   height: 100%;
-  background: #111111;
+  background: #16314D;
   border-radius: 999px;
 }
