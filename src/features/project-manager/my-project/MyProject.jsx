@@ -27,6 +27,7 @@ export default function MyProject() {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
+    localStorage.removeItem("project_id");
     const fetchProjects = async () => {
       const data = await getMyProjects(token);
       setProjects(data || []);

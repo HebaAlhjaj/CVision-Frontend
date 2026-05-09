@@ -1,4 +1,6 @@
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 import {
   Folder,
   ClipboardList,
@@ -12,7 +14,13 @@ import "../team-member/TeamMemberLayout.css";
 export default function ProjectManagerLayout() {
   const navigate = useNavigate();
   const location = useLocation();
+const [selectedProjectId, setSelectedProjectId] = useState(
+  localStorage.getItem("project_id")
+);
 
+useEffect(() => {
+  setSelectedProjectId(localStorage.getItem("project_id"));
+}, [location.pathname]);
   const menuItems = [
     {
       label: "Project",
@@ -82,11 +90,17 @@ export default function ProjectManagerLayout() {
             const isActive = location.pathname === item.path;
 
             return (
-              <button
-                key={item.path}
-                className={`tm-tab ${isActive ? "active" : ""}`}
-                onClick={() => navigate(item.path)}
-              >
+             <button
+  key={item.path}
+  disabled={item.label !== "Project" && !selectedProjectId}
+  className={`tm-tab ${isActive ? "active" : ""} ${
+    item.label !== "Project" && !selectedProjectId ? "disabled" : ""
+  }`}
+  onClick={() => {
+    if (item.label !== "Project" && !selectedProjectId) return;
+    navigate(item.path);
+  }}
+>
                 {item.icon}
                 <span>{item.label}</span>
               </button>
