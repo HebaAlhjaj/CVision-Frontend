@@ -10,7 +10,6 @@ export default function TeamMemberLayout() {
     localStorage.getItem("name") ||
     localStorage.getItem("username") ||
     localStorage.getItem("full_name") ||
-    localStorage.getItem("email") ||
     "Team Member";
 
   const firstLetter = userName.charAt(0).toUpperCase();

@@ -24,7 +24,6 @@ const [selectedProjectId, setSelectedProjectId] = useState(
     localStorage.getItem("name") ||
       localStorage.getItem("username") ||
       localStorage.getItem("full_name") ||
-      localStorage.getItem("email") ||
       "Project Manager"
   );
 
@@ -35,7 +34,6 @@ const [selectedProjectId, setSelectedProjectId] = useState(
       localStorage.getItem("name") ||
         localStorage.getItem("username") ||
         localStorage.getItem("full_name") ||
-        localStorage.getItem("email") ||
         "Project Manager"
     );
   }, [location.pathname]);
@@ -100,7 +98,7 @@ const [selectedProjectId, setSelectedProjectId] = useState(
         <div className="tm-topbar-right">
           <div className="tm-user-info">
             <h4>{userName}</h4>
-            <p>Dashboard</p>
+            <p>Project Manager</p>
           </div>
 
           <div className="tm-avatar">
