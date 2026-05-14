@@ -29,6 +29,13 @@ export default function Signup() {
     try {
       setLoading(true);
 
+      // امسح أي توكن قديم عشان ما يعطي Invalid token
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("token");
+      localStorage.removeItem("token_type");
+      localStorage.removeItem("role");
+      localStorage.removeItem("user_id");
+
       // 1) Signup
       const signupRes = await signup({
         full_name: full_name.trim(),
@@ -37,33 +44,33 @@ export default function Signup() {
         role,
       });
 
+      console.log("SIGNUP FINAL RESPONSE:", signupRes);
+
       // 2) Auto Login
       const res = await login({
         email: email.trim(),
         password,
       });
 
+      console.log("LOGIN AFTER SIGNUP RESPONSE:", res);
+
+      const accessToken = res.access_token || res.token;
+
+      if (!accessToken) {
+        throw new Error("Login after signup failed: no token returned");
+      }
+
       // 3) Save session
-      localStorage.setItem("access_token", res.access_token);
-      localStorage.setItem("token", res.access_token);
+      localStorage.setItem("access_token", accessToken);
+      localStorage.setItem("token", accessToken);
       localStorage.setItem("token_type", res.token_type || "bearer");
       localStorage.setItem("role", res.role || role);
       localStorage.setItem("user_id", String(res.user_id || ""));
 
       // 4) Save user name
-      localStorage.setItem(
-        "name",
-        res.name ||
-          res.username ||
-          res.full_name ||
-          signupRes.full_name ||
-          full_name.trim()
-      );
-
-      localStorage.setItem(
-        "full_name",
-        res.full_name || signupRes.full_name || full_name.trim()
-      );
+      // مهم: نخزن الاسم الذي كتبه المستخدم، وليس الإيميل
+      localStorage.setItem("name", full_name.trim());
+      localStorage.setItem("full_name", full_name.trim());
 
       // 5) Redirect by role
       const userRole = res.role || role;
@@ -81,6 +88,10 @@ export default function Signup() {
       }
     } catch (err) {
       console.log("SIGNUP ERROR:", err);
+
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("token");
+
       setError(err?.message || "Failed to create account");
     } finally {
       setLoading(false);
@@ -173,6 +184,7 @@ export default function Signup() {
             {/* Role Selection */}
             <div style={{ margin: "12px 0" }}>
               <div style={{ marginBottom: 8 }}>I am a:</div>
+
               <div style={{ display: "flex", gap: 12 }}>
                 <button
                   type="button"
