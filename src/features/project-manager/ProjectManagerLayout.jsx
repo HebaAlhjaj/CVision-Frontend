@@ -16,9 +16,9 @@ export default function ProjectManagerLayout() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [selectedProjectId, setSelectedProjectId] = useState(
-    localStorage.getItem("project_id")
-  );
+const [selectedProjectId, setSelectedProjectId] = useState(
+  localStorage.getItem("project_id")
+);
 
   const [userName, setUserName] = useState(
     localStorage.getItem("name") ||

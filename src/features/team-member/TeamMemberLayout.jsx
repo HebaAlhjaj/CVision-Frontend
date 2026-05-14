@@ -6,10 +6,26 @@ export default function TeamMemberLayout() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const fullName = localStorage.getItem("full_name") || "User";
-  const firstLetter = fullName.charAt(0).toUpperCase();
+  const userName =
+    localStorage.getItem("name") ||
+    localStorage.getItem("username") ||
+    localStorage.getItem("full_name") ||
+    localStorage.getItem("email") ||
+    "Team Member";
+
+  const firstLetter = userName.charAt(0).toUpperCase();
 
   const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("project_id");
+    localStorage.removeItem("name");
+    localStorage.removeItem("username");
+    localStorage.removeItem("full_name");
+    localStorage.removeItem("email");
+    localStorage.removeItem("role");
+    localStorage.removeItem("user_id");
+
     navigate("/login");
   };
 
@@ -33,8 +49,8 @@ export default function TeamMemberLayout() {
 
         <div className="tm-topbar-right">
           <div className="tm-user-info">
-            <h4>{fullName}</h4>
-            <p>Dashboard</p>
+            <h4>{userName}</h4>
+            <p>Team Member</p>
           </div>
 
           <div className="tm-avatar">{firstLetter}</div>
