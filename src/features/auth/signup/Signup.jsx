@@ -29,7 +29,7 @@ export default function Signup() {
     try {
       setLoading(true);
 
-      // امسح أي توكن قديم عشان ما يعطي Invalid token
+      // امسح بيانات تسجيل الدخول القديمة فقط
       localStorage.removeItem("access_token");
       localStorage.removeItem("token");
       localStorage.removeItem("token_type");
@@ -54,27 +54,42 @@ export default function Signup() {
 
       console.log("LOGIN AFTER SIGNUP RESPONSE:", res);
 
-      const accessToken = res.access_token || res.token;
+      // login عندك ممكن يرجع token كنص مباشر أو object
+      const accessToken =
+        typeof res === "string" ? res : res.access_token || res.token;
 
       if (!accessToken) {
         throw new Error("Login after signup failed: no token returned");
       }
 
+      // الدور
+      const userRole =
+        typeof res === "object" && res.role ? res.role : role;
+
+      // user id
+      const userId =
+        typeof res === "object" && res.user_id ? String(res.user_id) : "";
+
+      // token type
+      const tokenType =
+        typeof res === "object" && res.token_type ? res.token_type : "bearer";
+
       // 3) Save session
       localStorage.setItem("access_token", accessToken);
       localStorage.setItem("token", accessToken);
-      localStorage.setItem("token_type", res.token_type || "bearer");
-      localStorage.setItem("role", res.role || role);
-      localStorage.setItem("user_id", String(res.user_id || ""));
+      localStorage.setItem("token_type", tokenType);
+      localStorage.setItem("role", userRole);
+      localStorage.setItem("user_id", userId);
 
       // 4) Save user name
       // مهم: نخزن الاسم الذي كتبه المستخدم، وليس الإيميل
       localStorage.setItem("name", full_name.trim());
       localStorage.setItem("full_name", full_name.trim());
 
-      // 5) Redirect by role
-      const userRole = res.role || role;
+      // نخزن الاسم مربوط بالإيميل عشان لو عمل Login لاحقًا نقدر نجيبه
+      localStorage.setItem(`user_name_${email.trim()}`, full_name.trim());
 
+      // 5) Redirect by role
       if (userRole === "PM" || userRole === "PROJECT_MANAGER") {
         navigate("/project-manager/my-project", { replace: true });
       } else if (
