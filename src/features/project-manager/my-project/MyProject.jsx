@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./myProject.css";
+import { Share2, Pencil, Trash2 } from "lucide-react";
 import {
   getMyProjects,
   createProject,
@@ -234,37 +235,40 @@ const handleUpdate = async (project) => {
   </button>
 
   {openMenuId === p.project_id && (
-    <div className="dropdown">
-      <p
-        onClick={(e) => {
-          e.stopPropagation();
-          setOpenShareId(p.project_id);
-          setOpenMenuId(null);
-        }}
-      >
-        Share
-      </p>
+  <div className="dropdown">
+  <p
+    onClick={(e) => {
+      e.stopPropagation();
+      setOpenShareId(p.project_id);
+      setOpenMenuId(null);
+    }}
+  >
+    <Share2 size={16} />
+    Share
+  </p>
 
-      <p
-        onClick={(e) => {
-          e.stopPropagation();
-          handleUpdate(p);
-          setOpenMenuId(null);
-        }}
-      >
-        Update
-      </p>
+  <p
+    onClick={(e) => {
+      e.stopPropagation();
+      handleUpdate(p);
+      setOpenMenuId(null);
+    }}
+  >
+    <Pencil size={16} />
+    Update
+  </p>
 
-      <p
-        onClick={(e) => {
-          e.stopPropagation();
-          handleDelete(p.project_id);
-          setOpenMenuId(null);
-        }}
-      >
-        Delete
-      </p>
-    </div>
+  <p
+    onClick={(e) => {
+      e.stopPropagation();
+      handleDelete(p.project_id);
+      setOpenMenuId(null);
+    }}
+  >
+    <Trash2 size={16} />
+    Delete
+  </p>
+</div>
   )}
 </div>
       <h3>{p.name}</h3>

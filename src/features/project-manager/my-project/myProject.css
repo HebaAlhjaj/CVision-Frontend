@@ -2,7 +2,7 @@
   padding: 40px;
   background: #DCE3E8;
   min-height: 100vh;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
 }
 
 /* Header */
@@ -12,6 +12,12 @@
   align-items: center;
 }
 
+.header h1 {
+  color: #142B46;
+  font-size: 34px;
+  font-weight: 800;
+}
+
 .create-btn {
   padding: 10px 15px;
   background: #16314D;
@@ -19,9 +25,16 @@
   border-radius: 12px;
   border: none;
   cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
 }
 
-/* 🔥 Form Card */
+.create-btn:hover {
+  background: #0F253B;
+  transform: translateY(-2px);
+}
+
+/* Form Card */
 .create-form {
   background: #fff;
   padding: 25px 30px;
@@ -91,6 +104,7 @@
   color: #142B46;
   border: 1px solid #C7CED8;
   cursor: pointer;
+  font-weight: 600;
 }
 
 .btn-create {
@@ -100,6 +114,7 @@
   color: #FFFFFF;
   border: none;
   cursor: pointer;
+  font-weight: 600;
 }
 
 /* Projects */
@@ -107,63 +122,131 @@
   margin-top: 20px;
   display: flex;
   gap: 20px;
-  flex-wrap: wrap; /* 🔥 مهم */
+  flex-wrap: wrap;
 }
 
-/* 🔥 Card */
+/* Card */
 .card {
   background: #fff;
-  padding: 20px;
-  border-radius: 15px;
+  padding: 22px;
+  border-radius: 18px;
   width: 250px;
-  position: relative; /* 🔥 مهم للـ menu */
+  position: relative;
   box-shadow: 0 8px 24px rgba(20, 43, 70, 0.08);
-  transition: 0.3s;
+  transition: 0.3s ease;
+  cursor: pointer;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 50px rgba(20, 43, 70, 0.35);
+  box-shadow: 0 20px 50px rgba(20, 43, 70, 0.22);
 }
 
-/* 🔥 Menu (3 dots) */
+.card h3 {
+  color: #142B46;
+  font-size: 22px;
+  margin-bottom: 12px;
+  padding-right: 35px;
+}
+
+.card p {
+  color: #2E435E;
+  font-size: 15px;
+  margin: 12px 0;
+}
+
+/* Menu */
 .menu {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 14px;
+  right: 14px;
+  z-index: 30;
 }
 
-.menu button {
+.menu > button {
+  width: 34px;
+  height: 34px;
   border: none;
   background: transparent;
-  font-size: 18px;
+  color: #142B46;
+  font-size: 22px;
   cursor: pointer;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.2s ease;
 }
 
-/* 🔥 Dropdown */
+.menu > button:hover {
+  background: #EEF3F7;
+  color: #16314D;
+}
+
+/* Dropdown */
 .dropdown {
   position: absolute;
-  top: 30px;
+  top: 42px;
   right: 0;
-  background: white;
-  padding: 6px 12px;
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(20, 43, 70, 0.12);
-  z-index: 10;
+  width: 155px;
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid #E3EAF1;
+  border-radius: 16px;
+  box-shadow: 0 18px 40px rgba(20, 43, 70, 0.22);
+  z-index: 100;
+  padding: 7px;
+  overflow: hidden;
+  animation: dropdownFade 0.18s ease;
 }
 
+/* Dropdown items */
 .dropdown p {
-  cursor: pointer;
   margin: 0;
+  padding: 11px 12px;
   color: #142B46;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 11px;
+  cursor: pointer;
+  transition: 0.2s ease;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .dropdown p:hover {
+  background: #EEF3F7;
   color: #16314D;
-  font-weight: bold;
+  transform: translateX(2px);
 }
 
-/* 🔥 Share Box */
+/* Delete item */
+.dropdown p:last-child {
+  color: #D62828;
+}
+
+.dropdown p:last-child:hover {
+  background: #FFECEC;
+  color: #B91C1C;
+}
+
+/* Dropdown animation */
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Share Box */
 .share-box {
   margin-top: 10px;
   display: flex;
@@ -193,20 +276,22 @@
   color: #2E435E;
   font-size: 15px;
 }
+
+/* Share Overlay */
 .share-overlay {
-  position: fixed; /* 🔥 أهم سطر */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
 
- background: rgba(20, 43, 70, 0.45);
+  background: rgba(20, 43, 70, 0.45);
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  z-index: 9999; /* 🔥 عشان يطلع فوق كل شي */
+  z-index: 9999;
 }
 
 .share-modal {
@@ -216,8 +301,13 @@
   width: 420px;
 
   position: relative;
-  z-index: 100000; /* 🔥 أعلى من كل شيء */
+  z-index: 100000;
   box-shadow: 0 14px 32px rgba(20, 43, 70, 0.18);
+}
+
+.share-modal h3 {
+  color: #142B46;
+  margin-bottom: 10px;
 }
 
 .share-input-row {
@@ -229,6 +319,9 @@
 .share-input-row input {
   flex: 1;
   padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #C7CED8;
+  color: #142B46;
 }
 
 .share-input-row button {
@@ -236,17 +329,36 @@
   color: #FFFFFF;
   border-radius: 8px;
   padding: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
 }
+
+.share-link {
+  margin-top: 18px;
+  color: #2E435E;
+}
+
+.share-link p {
+  color: #16314D;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Create Overlay */
 .create-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
+
   background: rgba(20, 43, 70, 0.45);
+
   display: flex;
   justify-content: center;
   align-items: center;
+
   z-index: 9998;
 }
 
