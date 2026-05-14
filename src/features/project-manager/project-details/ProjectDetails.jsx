@@ -121,15 +121,7 @@ export default function ProjectDetails() {
   <h2>{project?.name}</h2>
   <p>{project?.description}</p>
 
-  <div className="project-dates">
-    <span>
-      <strong>Start:</strong> {project?.start_date}
-    </span>
 
-    <span>
-      <strong>End:</strong> {project?.end_date}
-    </span>
-  </div>
 </div>
 
 <span className="status-pill">
