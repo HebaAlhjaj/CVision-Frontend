@@ -7,7 +7,6 @@ import "../login/login.css";
 export default function Signup() {
   const navigate = useNavigate();
 
-  // نفس أسماء الباك
   const [full_name, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,33 +29,58 @@ export default function Signup() {
     try {
       setLoading(true);
 
-      // Signup
-      await signup({
+      // 1) Signup
+      const signupRes = await signup({
         full_name: full_name.trim(),
         email: email.trim(),
         password,
         role,
       });
 
-      // Auto login
+      // 2) Auto Login
       const res = await login({
         email: email.trim(),
         password,
       });
 
-      // Save session
+      // 3) Save session
       localStorage.setItem("access_token", res.access_token);
+      localStorage.setItem("token", res.access_token);
       localStorage.setItem("token_type", res.token_type || "bearer");
-      localStorage.setItem("role", res.role);
-      localStorage.setItem("user_id", String(res.user_id));
+      localStorage.setItem("role", res.role || role);
+      localStorage.setItem("user_id", String(res.user_id || ""));
 
-      // Redirect
-      if (res.role === "PM") {
-  navigate("/project-manager/my-project", { replace: true });
-} else {
-  navigate("/team-member/my-project", { replace: true });
-}
+      // 4) Save user name
+      localStorage.setItem(
+        "name",
+        res.name ||
+          res.username ||
+          res.full_name ||
+          signupRes.full_name ||
+          full_name.trim()
+      );
+
+      localStorage.setItem(
+        "full_name",
+        res.full_name || signupRes.full_name || full_name.trim()
+      );
+
+      // 5) Redirect by role
+      const userRole = res.role || role;
+
+      if (userRole === "PM" || userRole === "PROJECT_MANAGER") {
+        navigate("/project-manager/my-project", { replace: true });
+      } else if (
+        userRole === "TM" ||
+        userRole === "MEMBER" ||
+        userRole === "TEAM_MEMBER"
+      ) {
+        navigate("/team-member/my-project", { replace: true });
+      } else {
+        navigate("/login", { replace: true });
+      }
     } catch (err) {
+      console.log("SIGNUP ERROR:", err);
       setError(err?.message || "Failed to create account");
     } finally {
       setLoading(false);
@@ -124,21 +148,18 @@ export default function Signup() {
       <section className="login-right">
         <div className="auth-card">
           <div className="auth-tabs">
-  <button
-    type="button"
-    className="tab"
-    onClick={() => navigate("/login")}
-  >
-    Log in
-  </button>
+            <button
+              type="button"
+              className="tab"
+              onClick={() => navigate("/login")}
+            >
+              Log in
+            </button>
 
-  <button
-    type="button"
-    className="tab active"
-  >
-    Sign up
-  </button>
-</div>
+            <button type="button" className="tab active">
+              Sign up
+            </button>
+          </div>
 
           <div className="form-card">
             <div className="form-title">Create New Account</div>
