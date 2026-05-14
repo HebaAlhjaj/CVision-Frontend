@@ -9,18 +9,48 @@ import {
   BarChart3,
   LogOut,
 } from "lucide-react";
+
 import "../team-member/TeamMemberLayout.css";
 
 export default function ProjectManagerLayout() {
   const navigate = useNavigate();
   const location = useLocation();
-const [selectedProjectId, setSelectedProjectId] = useState(
-  localStorage.getItem("project_id")
-);
 
-useEffect(() => {
-  setSelectedProjectId(localStorage.getItem("project_id"));
-}, [location.pathname]);
+  const [selectedProjectId, setSelectedProjectId] = useState(
+    localStorage.getItem("project_id")
+  );
+
+  const [userName, setUserName] = useState(
+    localStorage.getItem("name") ||
+      localStorage.getItem("username") ||
+      localStorage.getItem("full_name") ||
+      localStorage.getItem("email") ||
+      "Project Manager"
+  );
+
+  useEffect(() => {
+    setSelectedProjectId(localStorage.getItem("project_id"));
+
+    setUserName(
+      localStorage.getItem("name") ||
+        localStorage.getItem("username") ||
+        localStorage.getItem("full_name") ||
+        localStorage.getItem("email") ||
+        "Project Manager"
+    );
+  }, [location.pathname]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("project_id");
+    localStorage.removeItem("name");
+    localStorage.removeItem("username");
+    localStorage.removeItem("full_name");
+    localStorage.removeItem("email");
+
+    navigate("/login");
+  };
+
   const menuItems = [
     {
       label: "Project",
@@ -69,16 +99,15 @@ useEffect(() => {
 
         <div className="tm-topbar-right">
           <div className="tm-user-info">
-            <h4>Project Manager</h4>
+            <h4>{userName}</h4>
             <p>Dashboard</p>
           </div>
 
-          <div className="tm-avatar">P</div>
+          <div className="tm-avatar">
+            {userName.charAt(0).toUpperCase()}
+          </div>
 
-          <button
-            className="tm-logout-btn"
-            onClick={() => navigate("/login")}
-          >
+          <button className="tm-logout-btn" onClick={handleLogout}>
             <LogOut size={20} />
           </button>
         </div>
@@ -90,17 +119,19 @@ useEffect(() => {
             const isActive = location.pathname === item.path;
 
             return (
-             <button
-  key={item.path}
-  disabled={item.label !== "Project" && !selectedProjectId}
-  className={`tm-tab ${isActive ? "active" : ""} ${
-    item.label !== "Project" && !selectedProjectId ? "disabled" : ""
-  }`}
-  onClick={() => {
-    if (item.label !== "Project" && !selectedProjectId) return;
-    navigate(item.path);
-  }}
->
+              <button
+                key={item.path}
+                disabled={item.label !== "Project" && !selectedProjectId}
+                className={`tm-tab ${isActive ? "active" : ""} ${
+                  item.label !== "Project" && !selectedProjectId
+                    ? "disabled"
+                    : ""
+                }`}
+                onClick={() => {
+                  if (item.label !== "Project" && !selectedProjectId) return;
+                  navigate(item.path);
+                }}
+              >
                 {item.icon}
                 <span>{item.label}</span>
               </button>
