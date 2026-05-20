@@ -25,24 +25,14 @@ export default function MyProject() {
 
   const token = localStorage.getItem("token");
 
-  const makeSlug = (name) => {
-    return String(name || "")
-      .toLowerCase()
-      .trim()
-      .replace(/\s+/g, "-")
-      .replace(/[^a-z0-9-]/g, "");
-  };
-
   const selectedProject = projects.find((p) => p.project_id === openShareId);
 
   const shareLink = selectedProject
-    ? `http://localhost:5173/join/${makeSlug(selectedProject.name)}?token=${
-        selectedProject.invite_token ||
-        selectedProject.token ||
-        selectedProject.join_token ||
-        selectedProject.share_token ||
-        ""
-      }`
+    ? selectedProject.invite_link ||
+      selectedProject.share_link ||
+      selectedProject.join_link ||
+      selectedProject.invitation_link ||
+      ""
     : "";
 
   useEffect(() => {
@@ -289,7 +279,7 @@ export default function MyProject() {
               <input readOnly value={shareLink} />
 
               <button
-                disabled={copying}
+                disabled={copying || !shareLink}
                 onClick={async () => {
                   try {
                     setCopying(true);
