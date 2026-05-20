@@ -15,8 +15,8 @@ export default function MyProject() {
 
   const [openMenuId, setOpenMenuId] = useState(null);
   const [openShareId, setOpenShareId] = useState(null);
+  const [shareLink, setShareLink] = useState("");
   const [copying, setCopying] = useState(false);
-  const [email, setEmail] = useState("");
 
   const [form, setForm] = useState({
     name: "",
@@ -26,29 +26,6 @@ export default function MyProject() {
   });
 
   const token = localStorage.getItem("token");
-
-  const makeSlug = (name) => {
-    return String(name || "")
-      .toLowerCase()
-      .trim()
-      .replace(/\s+/g, "-")
-      .replace(/[^a-z0-9-]/g, "");
-  };
-
-  const selectedProject = projects.find(
-    (p) => p.project_id === openShareId
-  );
-
-
-const shareLink = selectedProject
-  ? `http://localhost:5173/join/${makeSlug(selectedProject.name)}?token=${
-      selectedProject.invite_token ||
-      selectedProject.token ||
-      selectedProject.join_token ||
-      selectedProject.share_token ||
-      ""
-    }`
-  : "";
 
   useEffect(() => {
     localStorage.removeItem("project_id");
@@ -73,7 +50,6 @@ const shareLink = selectedProject
       const createdProject = await createProject(data, token);
 
       localStorage.setItem("project_id", createdProject.project_id);
-
       window.location.href = "/project-manager/project-details";
     } catch (err) {
       console.log("CREATE PROJECT ERROR:", err);
@@ -119,9 +95,7 @@ const shareLink = selectedProject
 
       setProjects((prev) =>
         prev.map((p) =>
-          p.project_id === project.project_id
-            ? { ...p, name: newName }
-            : p
+          p.project_id === project.project_id ? { ...p, name: newName } : p
         )
       );
 
@@ -132,17 +106,30 @@ const shareLink = selectedProject
     }
   };
 
-  const handleInvite = async (projectId) => {
+  const handleShare = async (projectId) => {
     try {
-      await inviteToProject(projectId, email, token);
+      const response = await inviteToProject(projectId, "", token);
 
-      alert("Invitation sent ✅");
+      const link =
+        response.invite_link ||
+        response.share_link ||
+        response.join_link ||
+        response.invitation_link ||
+        response.url ||
+        "";
 
-      setEmail("");
-      setOpenShareId(null);
+      if (!link) {
+        console.log("INVITE RESPONSE:", response);
+        alert("Invite link not returned from server");
+        return;
+      }
+
+      setShareLink(link);
+      setOpenShareId(projectId);
+      setOpenMenuId(null);
     } catch (err) {
       console.log(err);
-      alert("Error ❌");
+      alert("Failed to generate link");
     }
   };
 
@@ -169,9 +156,7 @@ const shareLink = selectedProject
               className="input-pro"
               placeholder="Project Name"
               value={form.name}
-              onChange={(e) =>
-                setForm({ ...form, name: e.target.value })
-              }
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
             />
 
             <textarea
@@ -258,8 +243,7 @@ const shareLink = selectedProject
                   <p
                     onClick={(e) => {
                       e.stopPropagation();
-                      setOpenShareId(p.project_id);
-                      setOpenMenuId(null);
+                      handleShare(p.project_id);
                     }}
                   >
                     <Share2 size={16} />
@@ -303,7 +287,10 @@ const shareLink = selectedProject
       {openShareId && (
         <div
           className="share-overlay"
-          onClick={() => setOpenShareId(null)}
+          onClick={() => {
+            setOpenShareId(null);
+            setShareLink("");
+          }}
         >
           <div
             className="share-modal"
@@ -315,13 +302,11 @@ const shareLink = selectedProject
               <input readOnly value={shareLink} />
 
               <button
-                disabled={copying}
+                disabled={copying || !shareLink}
                 onClick={async () => {
                   try {
                     setCopying(true);
-
                     await navigator.clipboard.writeText(shareLink);
-
                     alert("Link copied ✅");
                   } catch (err) {
                     alert("Failed ❌");
