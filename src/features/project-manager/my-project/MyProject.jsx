@@ -4,7 +4,6 @@ import { Share2, Pencil, Trash2, Folder } from "lucide-react";
 import {
   getMyProjects,
   createProject,
-  inviteToProject,
   deleteProject,
   updateProject,
 } from "./myProject.service";
@@ -16,7 +15,6 @@ export default function MyProject() {
   const [openMenuId, setOpenMenuId] = useState(null);
   const [openShareId, setOpenShareId] = useState(null);
   const [copying, setCopying] = useState(false);
-  const [email, setEmail] = useState("");
 
   const [form, setForm] = useState({
     name: "",
@@ -38,7 +36,13 @@ export default function MyProject() {
   const selectedProject = projects.find((p) => p.project_id === openShareId);
 
   const shareLink = selectedProject
-    ? `http://localhost:5173/join/${makeSlug(selectedProject.name)}`
+    ? `http://localhost:5173/join/${makeSlug(selectedProject.name)}?token=${
+        selectedProject.invite_token ||
+        selectedProject.token ||
+        selectedProject.join_token ||
+        selectedProject.share_token ||
+        ""
+      }`
     : "";
 
   useEffect(() => {
@@ -46,6 +50,7 @@ export default function MyProject() {
 
     const fetchProjects = async () => {
       const data = await getMyProjects(token);
+      console.log("PROJECTS RESPONSE:", data);
       setProjects(data || []);
     };
 
@@ -116,18 +121,6 @@ export default function MyProject() {
     } catch (err) {
       console.log(err);
       alert("Failed to update project ❌");
-    }
-  };
-
-  const handleInvite = async (projectId) => {
-    try {
-      await inviteToProject(projectId, email, token);
-      alert("Invitation sent ✅");
-      setEmail("");
-      setOpenShareId(null);
-    } catch (err) {
-      console.log(err);
-      alert("Error ❌");
     }
   };
 
