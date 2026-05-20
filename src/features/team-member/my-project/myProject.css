@@ -17,7 +17,7 @@ body,
   width: 100%;
   min-height: 100vh;
   background: #DCE3E8;
-  color:#142B46;;
+  color: #142B46;
 }
 
 .tm-topbar {
@@ -113,12 +113,12 @@ body,
   justify-content: center;
   transition: 0.2s;
 }
+
 .tm-logout-btn:hover {
   background: #E9EEF4;
   border-color: #8EA0B5;
   color: #142B46;
 }
-
 
 .tm-tabs-wrapper {
   width: 100%;
@@ -127,7 +127,7 @@ body,
 
 .tm-tabs {
   width: 100%;
-  background:  #8EA0B5;
+  background: #8EA0B5;
   border-radius: 999px;
   padding: 8px;
   display: flex;
@@ -150,12 +150,18 @@ body,
   background: #ffffff;
   color: #16314D;
   box-shadow: 0 2px 6px rgba(20, 43, 70, 0.15);
-
 }
+
 .tm-content {
   width: calc(100% - 76px);
   margin: 0 38px;
   padding: 28px 0 40px;
+}
+
+.tm-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .tm-title {
@@ -171,79 +177,60 @@ body,
   color: #2E435E;
 }
 
+.join-btn {
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 18px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+}
+
 .tm-empty-card {
   margin-top: 52px;
   width: 100%;
   min-height: 340px;
   background: #efe8ef;
-  border: 1px solid #C7CED8;
-  border-radius: 24px;
+  border: none;
+  border-radius: 18px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 8px;
   padding: 30px;
   text-align: center;
-  box-shadow: 0 8px 24px rgba(20, 43, 70, 0.08);
 }
 
 .tm-empty-icon {
   width: 90px;
   height: 90px;
   border-radius: 50%;
-  background:  #E9EEF4;
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 38px;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 
 .tm-empty-card h3 {
   margin: 0;
-  font-size: 34px;
+  font-size: 20px;
   font-weight: 800;
-  color: #142B46;
+  color: #111;
 }
 
 .tm-empty-card p {
-  margin-top: 12px;
-  font-size: 16px;
-  color: #2E435E;
+  margin-top: 4px;
+  font-size: 13px;
+  color: #333;
 }
 
-@media (max-width: 768px) {
-  .tm-topbar {
-    flex-wrap: wrap;
-    gap: 14px;
-    padding: 16px 18px;
-  }
-
-  .tm-tabs-wrapper {
-    padding: 20px 18px 0;
-  }
-
-  .tm-tabs {
-    flex-direction: column;
-    border-radius: 24px;
-  }
-
-  .tm-tab {
-    border-radius: 18px;
-  }
-
-  .tm-content {
-    padding: 24px 18px 40px;
-  }
-
-  .tm-title {
-    font-size: 44px;
-  }
-
-  .tm-empty-card h3 {
-    font-size: 26px;
-  }
-  .tm-message-card {
+.tm-message-card {
   margin-top: 40px;
   width: 100%;
   min-height: 120px;
@@ -254,7 +241,6 @@ body,
   align-items: center;
   justify-content: center;
   font-size: 18px;
-  box-shadow: 0 8px 24px rgba(20, 43, 70, 0.06);
 }
 
 .tm-message-card.error {
@@ -285,7 +271,100 @@ body,
 
 .tm-project-card p {
   margin: 0;
-  color:  #2E435E;
+  color: #2E435E;
   font-size: 15px;
 }
+
+/* Join Modal */
+.join-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.join-modal {
+  width: 430px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px 22px;
+}
+
+.join-modal h3 {
+  margin: 0 0 14px;
+  font-size: 17px;
+  font-weight: 800;
+  color: #111;
+}
+
+.join-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.join-row input {
+  flex: 1;
+  height: 26px;
+  border: 1px solid #999;
+  padding: 0 8px;
+  font-size: 11px;
+}
+
+.join-row button {
+  height: 28px;
+  background: #006fc9;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0 12px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .tm-topbar {
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 16px 18px;
+  }
+
+  .tm-tabs-wrapper {
+    padding: 20px 18px 0;
+  }
+
+  .tm-tabs {
+    flex-direction: column;
+    border-radius: 24px;
+  }
+
+  .tm-tab {
+    border-radius: 18px;
+  }
+
+  .tm-content {
+    width: calc(100% - 36px);
+    margin: 0 18px;
+    padding: 24px 0 40px;
+  }
+
+  .tm-header-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .tm-title {
+    font-size: 34px;
+  }
+
+  .tm-empty-card h3 {
+    font-size: 20px;
+  }
+
+  .join-modal {
+    width: calc(100% - 40px);
+  }
 }

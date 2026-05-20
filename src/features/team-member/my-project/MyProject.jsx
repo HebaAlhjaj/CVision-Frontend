@@ -7,35 +7,85 @@ export default function MyProject() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    async function fetchProjects() {
-      try {
-        setLoading(true);
-        setError("");
+  const [openJoin, setOpenJoin] = useState(false);
+  const [joinLink, setJoinLink] = useState("");
 
-        const data = await getMyProjects();
+  async function fetchProjects() {
+    try {
+      setLoading(true);
+      setError("");
 
-        if (Array.isArray(data)) {
-          setProjects(data);
-        } else {
-          setProjects([]);
-        }
-      } catch (err) {
-        setError(err?.message || "Failed to fetch projects");
-      } finally {
-        setLoading(false);
+      const data = await getMyProjects();
+
+      if (Array.isArray(data)) {
+        setProjects(data);
+      } else {
+        setProjects([]);
       }
+    } catch (err) {
+      setError(err?.message || "Failed to fetch projects");
+    } finally {
+      setLoading(false);
     }
+  }
 
+  useEffect(() => {
     fetchProjects();
   }, []);
 
+  const handleJoinByLink = async () => {
+    try {
+      const url = new URL(joinLink);
+      const inviteToken = url.searchParams.get("token");
+      const authToken = localStorage.getItem("token");
+
+      if (!inviteToken) {
+        alert("Invite token is missing");
+        return;
+      }
+
+      const res = await fetch("http://127.0.0.1:8000/projects/join", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify({
+          token: inviteToken,
+        }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        throw new Error(data?.detail || "Failed to join project");
+      }
+
+      alert("Joined successfully ✅");
+
+      setOpenJoin(false);
+      setJoinLink("");
+      fetchProjects();
+    } catch (err) {
+      console.log(err);
+      alert(err?.message || "Invalid link");
+    }
+  };
+
   return (
     <main className="tm-content">
-      <h1 className="tm-title">My Project</h1>
-      <p className="tm-subtitle">
-        View all projects you&apos;re part of and your role assignment
-      </p>
+      <div className="tm-header-row">
+        <div>
+          <h1 className="tm-title">My Project</h1>
+          <p className="tm-subtitle">
+            View all projects you&apos;re part of and your role assignment
+          </p>
+        </div>
+
+        <button className="join-btn" onClick={() => setOpenJoin(true)}>
+          + Join Project
+        </button>
+      </div>
 
       {loading && (
         <section className="tm-message-card">
@@ -53,7 +103,7 @@ export default function MyProject() {
         <section className="tm-empty-card">
           <div className="tm-empty-icon">📁</div>
           <h3>No projects joined yet</h3>
-          <p>You are not assigned to any project yet.</p>
+          <p>Use the “Join Project” button to enter a team code and join a project</p>
         </section>
       )}
 
@@ -61,12 +111,30 @@ export default function MyProject() {
         <section className="tm-projects-list">
           {projects.map((project) => (
             <div className="tm-project-card" key={project.project_id}>
-              <h3>{project.project_name}</h3>
-              <p>Role: {project.role_name}</p>
+              <h3>{project.project_name || project.name}</h3>
+              <p>Role: {project.role_name || "Not assigned yet"}</p>
             </div>
           ))}
         </section>
       )}
+
+    {openJoin && (
+  <div className="join-overlay" onClick={() => setOpenJoin(false)}>
+    <div className="join-modal" onClick={(e) => e.stopPropagation()}>
+      <h3>Join Project</h3>
+
+      <div className="join-row">
+        <input
+          placeholder="Paste your link here"
+          value={joinLink}
+          onChange={(e) => setJoinLink(e.target.value)}
+        />
+
+        <button onClick={handleJoinByLink}>Paste Link</button>
+      </div>
+    </div>
+  </div>
+)}
     </main>
   );
 }
