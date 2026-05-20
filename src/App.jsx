@@ -14,7 +14,7 @@ import ProjectDetails from "./features/project-manager/project-details/ProjectDe
 import TeamMembers from "./features/project-manager/team-members/TeamMembers";
 import RoleMatch from "./features/project-manager/role-match/RoleMatch";
 import SkillGaps from "./features/project-manager/skill-gaps/SkillGaps";
-
+import JoinProject from "./features/team-member/join-project/JoinProject";
 export default function App() {
   return (
     <BrowserRouter>
@@ -39,6 +39,8 @@ export default function App() {
           <Route path="role-match" element={<RoleMatch />} />
           <Route path="skill-gaps" element={<SkillGaps />} />
         </Route>
+
+        <Route path="/join-project" element={<JoinProject />} />
       </Routes>
     </BrowserRouter>
   );
