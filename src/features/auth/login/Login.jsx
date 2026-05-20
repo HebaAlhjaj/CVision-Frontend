@@ -8,6 +8,7 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -30,24 +31,28 @@ export default function Login() {
         password,
       });
 
-      // 🔥 الحل الصح
-      const token = res;
+      const token = res.access_token;
 
       if (!token) {
         throw new Error("Token not found!");
       }
 
-      // 🔥 تخزين التوكن
+      localStorage.setItem("access_token", token);
       localStorage.setItem("token", token);
+      localStorage.setItem("token_type", res.token_type || "bearer");
+      localStorage.setItem("role", res.role || "");
+      localStorage.setItem("user_id", String(res.user_id || ""));
 
-      console.log("TOKEN SAVED:", token);
+      localStorage.setItem(
+        "full_name",
+        res.full_name || res.name || res.username || ""
+      );
 
-      // (اختياري)
-      localStorage.setItem("full_name", trimmedEmail);
-
-      // 🔥 تحويل الصفحة
-      navigate("/project-manager/my-project", { replace: true });
-
+      if (res.role === "PM") {
+        navigate("/project-manager/my-project", { replace: true });
+      } else {
+        navigate("/team-member/my-project", { replace: true });
+      }
     } catch (err) {
       console.error(err);
       setError(err?.message || "Login failed");
@@ -65,48 +70,55 @@ export default function Login() {
             alt="CVision Logo"
             className="login-logo"
           />
+
           <div className="login-tagline">
             Smart CV analysis & team role distribution system
           </div>
         </div>
+
         <div className="features">
-  <div className="feature">
-    <div className="feature-icon">
-      <span className="icon-target" />
-    </div>
-    <div className="feature-text">
-      <div className="feature-title">AI-Powered skills analysis</div>
-      <div className="feature-desc">
-        Automatic extraction of skills, experience, and certification
-        from CVs
-      </div>
-    </div>
-  </div>
+          <div className="feature">
+            <div className="feature-icon">
+              <span className="icon-target" />
+            </div>
 
-  <div className="feature">
-    <div className="feature-icon">
-      <span className="icon-team" />
-    </div>
-    <div className="feature-text">
-      <div className="feature-title">Smart role matching</div>
-      <div className="feature-desc">
-        Intelligent role distribution based on project requirements and team skills
-      </div>
-    </div>
-  </div>
+            <div className="feature-text">
+              <div className="feature-title">AI-Powered skills analysis</div>
+              <div className="feature-desc">
+                Automatic extraction of skills, experience, and certification
+                from CVs
+              </div>
+            </div>
+          </div>
 
-  <div className="feature">
-    <div className="feature-icon">
-      <span className="icon-arrow" />
-    </div>
-    <div className="feature-text">
-      <div className="feature-title">Skills gap detection</div>
-      <div className="feature-desc">
-        Real-time alerts for missing skills with actionable recommendations
-      </div>
-    </div>
-  </div>
-</div>
+          <div className="feature">
+            <div className="feature-icon">
+              <span className="icon-team" />
+            </div>
+
+            <div className="feature-text">
+              <div className="feature-title">Smart role matching</div>
+              <div className="feature-desc">
+                Intelligent role distribution based on project requirements and
+                team skills
+              </div>
+            </div>
+          </div>
+
+          <div className="feature">
+            <div className="feature-icon">
+              <span className="icon-arrow" />
+            </div>
+
+            <div className="feature-text">
+              <div className="feature-title">Skills gap detection</div>
+              <div className="feature-desc">
+                Real-time alerts for missing skills with actionable
+                recommendations
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section className="login-right">
