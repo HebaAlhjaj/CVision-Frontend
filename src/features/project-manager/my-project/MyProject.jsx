@@ -39,22 +39,14 @@ export default function MyProject() {
     (p) => p.project_id === openShareId
   );
 
-  const makeSlug = (name) => {
-  return String(name || "")
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/[^a-z0-9-]/g, "");
-};
 
 const shareLink = selectedProject
-  ? `http://localhost:5173/join/${makeSlug(
-      selectedProject.name
-    )}?token=${
+  ? `http://localhost:5173/join/${makeSlug(selectedProject.name)}?token=${
       selectedProject.invite_token ||
       selectedProject.token ||
       selectedProject.join_token ||
-      selectedProject.share_token
+      selectedProject.share_token ||
+      ""
     }`
   : "";
 
