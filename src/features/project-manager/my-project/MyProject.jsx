@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./myProject.css";
-import { Share2, Pencil, Trash2, Folder } from "lucide-react";
+import { Share2, Pencil, Trash2 } from "lucide-react";
 import {
   getMyProjects,
   createProject,
+  inviteToProject,
   deleteProject,
   updateProject,
 } from "./myProject.service";
@@ -15,6 +16,7 @@ export default function MyProject() {
   const [openMenuId, setOpenMenuId] = useState(null);
   const [openShareId, setOpenShareId] = useState(null);
   const [copying, setCopying] = useState(false);
+  const [email, setEmail] = useState("");
 
   const [form, setForm] = useState({
     name: "",
@@ -25,14 +27,20 @@ export default function MyProject() {
 
   const token = localStorage.getItem("token");
 
-  const selectedProject = projects.find((p) => p.project_id === openShareId);
+  const makeSlug = (name) => {
+    return String(name || "")
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-]/g, "");
+  };
+
+  const selectedProject = projects.find(
+    (p) => p.project_id === openShareId
+  );
 
   const shareLink = selectedProject
-    ? selectedProject.invite_link ||
-      selectedProject.share_link ||
-      selectedProject.join_link ||
-      selectedProject.invitation_link ||
-      ""
+    ? `http://localhost:5173/join/${makeSlug(selectedProject.name)}`
     : "";
 
   useEffect(() => {
@@ -40,7 +48,6 @@ export default function MyProject() {
 
     const fetchProjects = async () => {
       const data = await getMyProjects(token);
-      console.log("PROJECTS RESPONSE:", data);
       setProjects(data || []);
     };
 
@@ -57,7 +64,9 @@ export default function MyProject() {
       };
 
       const createdProject = await createProject(data, token);
+
       localStorage.setItem("project_id", createdProject.project_id);
+
       window.location.href = "/project-manager/project-details";
     } catch (err) {
       console.log("CREATE PROJECT ERROR:", err);
@@ -103,7 +112,9 @@ export default function MyProject() {
 
       setProjects((prev) =>
         prev.map((p) =>
-          p.project_id === project.project_id ? { ...p, name: newName } : p
+          p.project_id === project.project_id
+            ? { ...p, name: newName }
+            : p
         )
       );
 
@@ -111,6 +122,20 @@ export default function MyProject() {
     } catch (err) {
       console.log(err);
       alert("Failed to update project ❌");
+    }
+  };
+
+  const handleInvite = async (projectId) => {
+    try {
+      await inviteToProject(projectId, email, token);
+
+      alert("Invitation sent ✅");
+
+      setEmail("");
+      setOpenShareId(null);
+    } catch (err) {
+      console.log(err);
+      alert("Error ❌");
     }
   };
 
@@ -137,7 +162,9 @@ export default function MyProject() {
               className="input-pro"
               placeholder="Project Name"
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e) =>
+                setForm({ ...form, name: e.target.value })
+              }
             />
 
             <textarea
@@ -206,10 +233,6 @@ export default function MyProject() {
               window.location.href = "/project-manager/project-details";
             }}
           >
-            <div className="folder-box">
-              <Folder size={20} />
-            </div>
-
             <div className="menu">
               <button
                 onClick={(e) => {
@@ -271,19 +294,27 @@ export default function MyProject() {
       </div>
 
       {openShareId && (
-        <div className="share-overlay" onClick={() => setOpenShareId(null)}>
-          <div className="share-modal" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="share-overlay"
+          onClick={() => setOpenShareId(null)}
+        >
+          <div
+            className="share-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
             <h3>Share board</h3>
 
             <div className="share-input-row">
               <input readOnly value={shareLink} />
 
               <button
-                disabled={copying || !shareLink}
+                disabled={copying}
                 onClick={async () => {
                   try {
                     setCopying(true);
+
                     await navigator.clipboard.writeText(shareLink);
+
                     alert("Link copied ✅");
                   } catch (err) {
                     alert("Failed ❌");
