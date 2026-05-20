@@ -322,7 +322,6 @@ const handleUpdate = async (project) => {
 
             <div className="share-link">
               <span>🔗 Share this board with a link</span>
-              <p>Create Link</p>
             </div>
           </div>
         </div>

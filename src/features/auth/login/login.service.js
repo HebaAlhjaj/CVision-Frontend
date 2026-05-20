@@ -30,5 +30,5 @@ export async function login(payload) {
     throw new Error("No access_token returned from server");
   }
 
-  return data.access_token;
+  return data;
 }
