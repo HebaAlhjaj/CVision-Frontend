@@ -1,25 +1,23 @@
 import { useEffect } from "react";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function JoinProject() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { slug } = useParams();
 
   useEffect(() => {
     const joinProject = async () => {
       try {
-        const queryParams = new URLSearchParams(location.search);
-        const inviteToken = queryParams.get("token");
+        const query = new URLSearchParams(location.search);
+        const inviteToken = query.get("token");
 
-        const authToken = localStorage.getItem("token");
-
-        console.log("PROJECT SLUG:", slug);
         console.log("INVITE TOKEN:", inviteToken);
 
         if (!inviteToken) {
-          throw new Error("Invite token is missing from URL");
+          throw new Error("Invite token is missing");
         }
+
+        const authToken = localStorage.getItem("token");
 
         if (!authToken) {
           navigate("/login", { replace: true });
@@ -40,20 +38,22 @@ export default function JoinProject() {
         const data = await res.json().catch(() => ({}));
 
         if (!res.ok) {
-          throw new Error(data?.detail || data?.message || "Failed to join project");
+          throw new Error(data?.detail || "Failed to join project");
         }
 
         console.log("JOIN RESPONSE:", data);
 
+        alert("Joined successfully");
+
         navigate("/team-member/my-project", { replace: true });
-      } catch (error) {
-        console.log(error);
-        alert(error?.message || "Failed to join project");
+      } catch (err) {
+        console.error(err);
+        alert(err?.message || "Failed to join project");
       }
     };
 
     joinProject();
-  }, [location.search, navigate, slug]);
+  }, [location.search, navigate]);
 
   return <div>Joining project...</div>;
 }
