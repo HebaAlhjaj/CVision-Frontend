@@ -11,9 +11,20 @@ export default function JoinProject() {
       try {
         const queryParams = new URLSearchParams(location.search);
         const inviteToken = queryParams.get("token");
+
         const authToken = localStorage.getItem("token");
 
         console.log("PROJECT SLUG:", slug);
+        console.log("INVITE TOKEN:", inviteToken);
+
+        if (!inviteToken) {
+          throw new Error("Invite token is missing from URL");
+        }
+
+        if (!authToken) {
+          navigate("/login", { replace: true });
+          return;
+        }
 
         const res = await fetch("http://127.0.0.1:8000/projects/join", {
           method: "POST",
@@ -26,14 +37,18 @@ export default function JoinProject() {
           }),
         });
 
+        const data = await res.json().catch(() => ({}));
+
         if (!res.ok) {
-          throw new Error("Failed to join project");
+          throw new Error(data?.detail || data?.message || "Failed to join project");
         }
+
+        console.log("JOIN RESPONSE:", data);
 
         navigate("/team-member/my-project", { replace: true });
       } catch (error) {
         console.log(error);
-        alert("Failed to join project");
+        alert(error?.message || "Failed to join project");
       }
     };
 
