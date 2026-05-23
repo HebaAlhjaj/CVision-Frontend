@@ -31,7 +31,7 @@ export default function UploadCV() {
       const formData = new FormData();
       formData.append("file", file);
 
-      const res = await fetch(`${API_BASE}/cv/upload`, {
+     const res = await fetch(`${API_BASE}/ai/analyze-cv`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -51,9 +51,12 @@ export default function UploadCV() {
       }
 
       setAnalysisResult({
-        fileName: data.fileName || file.name,
-        skills: Array.isArray(data.skills) ? data.skills : [],
-      });
+  fileName: file.name,
+  technical_skills: data.technical_skills || [],
+  skill_scores: data.skill_scores || {},
+  suggested_role: data.suggested_role || "Unknown",
+  experience_years: data.experience_years || 0,
+});
     } catch (err) {
       setError(err?.message || "Failed to upload and analyze CV");
     } finally {
@@ -100,28 +103,39 @@ export default function UploadCV() {
       {analysisResult && (
         <div className="analysis-box">
           <h3>Analysis Complete !</h3>
-          <p>We found {analysisResult.skills.length} skills in your CV</p>
+          <p>
+  We found {Object.keys(analysisResult.skill_scores || {}).length} skills in your CV
+</p>
           <p className="file-name">{analysisResult.fileName}</p>
 
           <div className="skills-section">
             <h4>Extracted Skills :</h4>
 
-            {analysisResult.skills.map((skill, index) => (
-              <div className="skill-item" key={index}>
-                <div className="skill-top">
-                  <span>{skill.name}</span>
-                  <span>{skill.score}/100</span>
-                </div>
+         {Object.entries(analysisResult.skill_scores).map(
+  ([skill, score], index) => (
+    <div className="skill-item" key={index}>
+      <div className="skill-top">
+        <span>{skill}</span>
+        <span>{score}/100</span>
+      </div>
 
-                <div className="skill-bar">
-                  <div
-                    className="skill-fill"
-                    style={{ width: `${skill.score}%` }}
-                  ></div>
-                </div>
-              </div>
-            ))}
+      <div className="skill-bar">
+        <div
+          className="skill-fill"
+          style={{ width: `${score}%` }}
+        ></div>
+      </div>
+    </div>
+  )
+)}
           </div>
+          <p>
+  <strong>Suggested Role:</strong> {analysisResult.suggested_role}
+</p>
+
+<p>
+  <strong>Experience:</strong> {analysisResult.experience_years} years
+</p>
         </div>
       )}
     </main>
