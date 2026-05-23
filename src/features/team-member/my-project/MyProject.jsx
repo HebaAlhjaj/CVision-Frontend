@@ -110,10 +110,42 @@ export default function MyProject() {
       {!loading && !error && projects.length > 0 && (
         <section className="tm-projects-list">
           {projects.map((project) => (
-            <div className="tm-project-card" key={project.project_id}>
-              <h3>{project.project_name || project.name}</h3>
-              <p>Role: {project.role_name || "Not assigned yet"}</p>
-            </div>
+          <div className="tm-project-card" key={project.project_id}>
+  <div className="project-card-top">
+    <div className="project-folder-icon">📁</div>
+    <span className="project-status">Active</span>
+  </div>
+
+  <h3>{project.project_name || project.name}</h3>
+
+  <p className="project-desc">
+    {project.description || "Building a modern e-commerce platform with React and Node.js"}
+  </p>
+
+  <div className="project-info-box">
+    <strong>My Role</strong>
+    <span>
+      {project.role_name || "Please upload your CV for role matching"}
+    </span>
+  </div>
+
+  <div className="cv-status-row">
+    <span>CV Status :</span>
+    <b>{project.cv_status || "Not Uploaded"}</b>
+  </div>
+
+  <div className="project-info-box members-box">
+    <strong>{project.team_members_count || 1} Team Member</strong>
+    <strong>
+      Started {project.start_date || "15/1/2025"}
+    </strong>
+  </div>
+
+  <p className="team-code-label">Team Code :</p>
+  <div className="team-code-box">
+    {project.team_code || "ECOM-2024-x7y9"}
+  </div>
+</div>
           ))}
         </section>
       )}
