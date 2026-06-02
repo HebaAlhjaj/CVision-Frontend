@@ -10,7 +10,7 @@ import {
   LogOut,
 } from "lucide-react";
 
-import "../team-member/TeamMemberLayout.css";
+import "./ProjectManagerLayout.css";
 
 export default function ProjectManagerLayout() {
   const navigate = useNavigate();
