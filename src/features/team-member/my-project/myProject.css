@@ -31,16 +31,29 @@ body,
   padding: 20px 38px;
 }
 
+/* ✅ نفس مكان Upload CV تقريبًا */
 .tm-content {
-  width: calc(100% - 76px);
-  margin: 0 38px;
-  padding: 28px 0 40px;
+  width: 100%;
+  margin: 0;
+  padding: 32px 130px 40px;
 }
 
+/* ✅ العنوان يسار والزر يمين */
 .tm-header-row {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 20px;
+}
+
+.tm-header-row > div {
+  flex: 1;
+}
+
+.tm-header-row .join-btn {
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
 .tm-title {
@@ -56,8 +69,9 @@ body,
   color: #2E435E;
 }
 
+/* ✅ نفس لون Choose File */
 .join-btn {
-  background: #000;
+  background: #173957;
   color: #fff;
   border: none;
   border-radius: 18px;
@@ -67,7 +81,12 @@ body,
   cursor: pointer;
 }
 
+.join-btn:hover {
+  opacity: 0.9;
+}
+
 .tm-projects-list {
+  width: 100%;
   margin-top: 40px;
   display: flex;
   flex-wrap: wrap;
