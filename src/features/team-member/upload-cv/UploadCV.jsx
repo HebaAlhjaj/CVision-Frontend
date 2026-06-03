@@ -32,7 +32,7 @@ export default function UploadCV() {
       const formData = new FormData();
       formData.append("file", file);
 
-      const res = await fetch(`${API_BASE}/ai/analyze-uploaded-cv`, {
+      const res = await fetch(`${API_BASE}/cv/upload`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
