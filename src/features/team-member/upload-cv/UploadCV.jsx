@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./uploadCV.css";
-
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8000";
+import { uploadCV } from "./uploadCV.service";
 
 export default function UploadCV() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -29,29 +28,9 @@ export default function UploadCV() {
     try {
       setLoading(true);
 
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const res = await fetch(`${API_BASE}/cv/upload`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
-
-      let data = {};
-      try {
-        data = await res.json();
-      } catch {
-        data = {};
-      }
+      const data = await uploadCV(file, token);
 
       console.log("CV ANALYSIS RESPONSE:", data);
-
-      if (!res.ok) {
-        throw new Error(data?.detail || data?.message || "CV upload failed");
-      }
 
       const technicalSkills =
         data.technical_skills ||
