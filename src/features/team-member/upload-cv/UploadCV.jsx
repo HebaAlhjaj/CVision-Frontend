@@ -11,6 +11,7 @@ export default function UploadCV() {
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
+
     setSelectedFile(file);
     setAnalysisResult(null);
     setError("");
@@ -31,7 +32,7 @@ export default function UploadCV() {
       const formData = new FormData();
       formData.append("file", file);
 
-     const res = await fetch(`${API_BASE}/ai/analyze-cv`, {
+      const res = await fetch(`${API_BASE}/ai/analyze-cv`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -46,23 +47,52 @@ export default function UploadCV() {
         data = {};
       }
 
+      console.log("CV ANALYSIS RESPONSE:", data);
+
       if (!res.ok) {
         throw new Error(data?.detail || data?.message || "CV upload failed");
       }
 
+      const technicalSkills =
+        data.technical_skills ||
+        data.skills ||
+        data.extracted_skills ||
+        [];
+
+      const skillScores =
+        data.skill_scores ||
+        data.skills_scores ||
+        data.scores ||
+        {};
+
       setAnalysisResult({
-  fileName: file.name,
-  technical_skills: data.technical_skills || [],
-  skill_scores: data.skill_scores || {},
-  suggested_role: data.suggested_role || "Unknown",
-  experience_years: data.experience_years || 0,
-});
+        fileName: file.name,
+        technical_skills: Array.isArray(technicalSkills)
+          ? technicalSkills
+          : [],
+        skill_scores: skillScores || {},
+        suggested_role:
+          data.suggested_role ||
+          data.role ||
+          data.recommended_role ||
+          "Unknown",
+        experience_years:
+          data.experience_years ||
+          data.experience ||
+          data.years_of_experience ||
+          0,
+      });
     } catch (err) {
       setError(err?.message || "Failed to upload and analyze CV");
     } finally {
       setLoading(false);
     }
   };
+
+  const skillsCount =
+    Object.keys(analysisResult?.skill_scores || {}).length ||
+    analysisResult?.technical_skills?.length ||
+    0;
 
   return (
     <main className="uploadcv-page">
@@ -77,6 +107,7 @@ export default function UploadCV() {
         </div>
 
         <h3>CV Upload &amp; Analysis</h3>
+
         <p className="uploadcv-box-text">
           Our AI will extract your skills, experience, and certifications
         </p>
@@ -103,39 +134,54 @@ export default function UploadCV() {
       {analysisResult && (
         <div className="analysis-box">
           <h3>Analysis Complete !</h3>
-          <p>
-  We found {Object.keys(analysisResult.skill_scores || {}).length} skills in your CV
-</p>
+
+          <p>We found {skillsCount} skills in your CV</p>
+
           <p className="file-name">{analysisResult.fileName}</p>
 
           <div className="skills-section">
             <h4>Extracted Skills :</h4>
 
-         {Object.entries(analysisResult.skill_scores).map(
-  ([skill, score], index) => (
-    <div className="skill-item" key={index}>
-      <div className="skill-top">
-        <span>{skill}</span>
-        <span>{score}/100</span>
-      </div>
+            {Object.keys(analysisResult.skill_scores || {}).length > 0 ? (
+              Object.entries(analysisResult.skill_scores).map(
+                ([skill, score], index) => (
+                  <div className="skill-item" key={index}>
+                    <div className="skill-top">
+                      <span>{skill}</span>
+                      <span>{score}/100</span>
+                    </div>
 
-      <div className="skill-bar">
-        <div
-          className="skill-fill"
-          style={{ width: `${score}%` }}
-        ></div>
-      </div>
-    </div>
-  )
-)}
+                    <div className="skill-bar">
+                      <div
+                        className="skill-fill"
+                        style={{ width: `${score}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                )
+              )
+            ) : analysisResult.technical_skills.length > 0 ? (
+              <div className="skills-list">
+                {analysisResult.technical_skills.map((skill, index) => (
+                  <span className="skill-chip" key={index}>
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <p className="no-skills-text">
+                No skills were extracted from this CV.
+              </p>
+            )}
           </div>
-          <p>
-  <strong>Suggested Role:</strong> {analysisResult.suggested_role}
-</p>
 
-<p>
-  <strong>Experience:</strong> {analysisResult.experience_years} years
-</p>
+          <p>
+            <strong>Suggested Role:</strong> {analysisResult.suggested_role}
+          </p>
+
+          <p>
+            <strong>Experience:</strong> {analysisResult.experience_years} years
+          </p>
         </div>
       )}
     </main>

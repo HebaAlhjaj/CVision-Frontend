@@ -155,3 +155,24 @@
   background: #16314D;
   border-radius: 999px;
 }
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.skill-chip {
+  background: #E9EEF4;
+  color: #142B46;
+  padding: 7px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.no-skills-text {
+  color: #2E435E;
+  font-size: 12px;
+  margin-top: 10px;
+}
