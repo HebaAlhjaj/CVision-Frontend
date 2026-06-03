@@ -382,3 +382,39 @@
 .folder-box svg {
   color: #777;
 }
+.card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.project-file-icon {
+  width: 48px;
+  height: 48px;
+  background: #97A3AD;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.card-top-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.active-badge {
+  background: #142B46;
+  color: #ffffff;
+  padding: 8px 22px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.card .menu {
+  position: relative;
+}

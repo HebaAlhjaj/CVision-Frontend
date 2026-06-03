@@ -225,54 +225,62 @@ export default function MyProject() {
               window.location.href = "/project-manager/project-details";
             }}
           >
-            <div className="menu">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
+            <div className="card-top">
+              <div className="project-file-icon">📁</div>
 
-                  setOpenMenuId(
-                    openMenuId === p.project_id ? null : p.project_id
-                  );
-                }}
-              >
-                ⋮
-              </button>
+              <div className="card-top-right">
+                <span className="active-badge">Active</span>
 
-              {openMenuId === p.project_id && (
-                <div className="dropdown">
-                  <p
+                <div className="menu">
+                  <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleShare(p.project_id);
-                    }}
-                  >
-                    <Share2 size={16} />
-                    Share
-                  </p>
 
-                  <p
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleUpdate(p);
-                      setOpenMenuId(null);
+                      setOpenMenuId(
+                        openMenuId === p.project_id ? null : p.project_id
+                      );
                     }}
                   >
-                    <Pencil size={16} />
-                    Update
-                  </p>
+                    ⋮
+                  </button>
 
-                  <p
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDelete(p.project_id);
-                      setOpenMenuId(null);
-                    }}
-                  >
-                    <Trash2 size={16} />
-                    Delete
-                  </p>
+                  {openMenuId === p.project_id && (
+                    <div className="dropdown">
+                      <p
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleShare(p.project_id);
+                        }}
+                      >
+                        <Share2 size={16} />
+                        Share
+                      </p>
+
+                      <p
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleUpdate(p);
+                          setOpenMenuId(null);
+                        }}
+                      >
+                        <Pencil size={16} />
+                        Update
+                      </p>
+
+                      <p
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDelete(p.project_id);
+                          setOpenMenuId(null);
+                        }}
+                      >
+                        <Trash2 size={16} />
+                        Delete
+                      </p>
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
 
             <h3>{p.name}</h3>
@@ -292,10 +300,7 @@ export default function MyProject() {
             setShareLink("");
           }}
         >
-          <div
-            className="share-modal"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="share-modal" onClick={(e) => e.stopPropagation()}>
             <h3>Share board</h3>
 
             <div className="share-input-row">
