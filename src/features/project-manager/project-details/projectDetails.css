@@ -1,64 +1,81 @@
 .details-page {
-  background: #DCE3E8;
-  min-height: 100vh;
-  padding: 34px 70px 60px;
-  font-family: Arial, sans-serif;
+  padding: 8px 0 60px;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   color: #142B46;
 }
 
+/* ── SUMMARY + ROLES WRAPPER ── */
 .project-summary-card,
 .roles-wrapper {
-  max-width: 980px;
-  margin: 0 auto 28px;
-  background:  #FFFFFF;
-  border-radius: 18px;
+  max-width: 940px;
+  margin: 0 auto 24px;
+  background: #FFFFFF;
+  border: 1px solid #E2EAF1;
+  border-radius: 20px;
   padding: 26px 28px;
-  box-shadow: 0 8px 24px rgba(20, 43, 70, 0.08);
+  box-shadow: 0 2px 12px rgba(20, 43, 70, 0.07);
+  transition: box-shadow 0.25s ease;
 }
 
+.project-summary-card:hover,
+.roles-wrapper:hover {
+  box-shadow: 0 8px 28px rgba(20, 43, 70, 0.10);
+}
+
+/* ── SUMMARY TOP ── */
 .summary-top {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 16px;
 }
 
 .summary-top h2,
 .roles-title-row h2 {
   margin: 0 0 6px;
-  font-size: 21px;
+  font-size: 20px;
   font-weight: 800;
+  color: #0F2D52;
+  letter-spacing: -0.3px;
 }
 
 .summary-top p,
 .roles-title-row p {
-  color: #2E435E;
+  color: #4B6882;
   margin: 0;
-  font-size: 14px;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 .status-pill {
-  background:  #16314D;
-  color: #FFFFFF;
+  background: #E8F5EE;
+  color: #15803D;
   border-radius: 999px;
   padding: 5px 16px;
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 700;
+  text-transform: capitalize;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
 }
 
+/* ── TEAM CODE BOX ── */
 .team-code-box {
-  background:  #E9EEF4;
-  border: 1px solid #C7CED8;
-  border-radius: 12px;
-  padding: 14px;
-  margin-top: 22px;
+  background: #F4F7FA;
+  border: 1px solid #E2EAF1;
+  border-radius: 14px;
+  padding: 16px;
+  margin-top: 20px;
 }
 
 .team-code-box label {
   display: block;
-  font-size: 12px;
-  font-weight: bold;
-  margin-bottom: 7px;
-  color: #142B46;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #6E8096;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
 }
 
 .team-code-row {
@@ -68,198 +85,346 @@
 
 .team-code-row input {
   flex: 1;
-  background: white;
-  border: 1px solid #C7CED8;
-  border-radius: 4px;
+  background: #FFFFFF;
+  border: 1.5px solid #CBD5E1;
+  border-radius: 10px;
   padding: 10px 14px;
-  font-weight: bold;
+  font-size: 13px;
+  font-weight: 600;
   color: #142B46;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.team-code-row input:focus {
+  border-color: #16314D;
+  box-shadow: 0 0 0 3px rgba(22, 49, 77, 0.10);
 }
 
 .team-code-row button {
-  background: white;
+  background: #FFFFFF;
   color: #16314D;
-  border: 1px solid #C7CED8;
-  border-radius: 6px;
-  padding: 0 14px;
+  border: 1.5px solid #CBD5E1;
+  border-radius: 10px;
+  padding: 0 16px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.team-code-row button:hover {
+  background: #EEF3F8;
+  border-color: #8EA0B5;
 }
 
 .team-code-box p {
-  margin: 7px 0 0;
-  color: #2E435E;
+  margin: 8px 0 0;
+  color: #6E8096;
   font-size: 12px;
 }
 
+/* ── ROLES TITLE ROW ── */
 .roles-title-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
 }
 
+/* ── ADD ROLE BUTTON ── */
 .add-role-btn,
 .create-role {
   background: #16314D;
   color: #FFFFFF;
   border: none;
   border-radius: 12px;
-  padding: 11px 22px;
+  padding: 10px 20px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(22, 49, 77, 0.20);
+  white-space: nowrap;
 }
 
+.add-role-btn:hover,
+.create-role:hover {
+  background: #0F253B;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 16px rgba(22, 49, 77, 0.28);
+}
+
+/* ── ROLES LIST ── */
 .roles-list {
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .role-card {
-  background: #E9EEF4;
-  border: 1px solid #C7CED8;
+  background: #F4F7FA;
+  border: 1px solid #E2EAF1;
   border-radius: 14px;
   padding: 20px 22px;
-  margin-bottom: 16px;
   position: relative;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.role-card:hover {
+  border-color: #8EA0B5;
+  box-shadow: 0 4px 14px rgba(20, 43, 70, 0.08);
 }
 
 .role-card h3 {
-  margin: 0 0 5px;
-  font-size: 17px;
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0F2D52;
+  padding-right: 36px;
 }
 
 .assigned-text {
-  margin: 0 0 18px;
-  color: #2E435E;
-  font-size: 13px;
+  margin: 0 0 16px;
+  color: #6E8096;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 .required-title {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   font-size: 12px;
-  font-weight: bold;
-  color: #142B46;
+  font-weight: 700;
+  color: #4B6882;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .skill-tags span {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   background: #16314D;
   color: #FFFFFF;
   border-radius: 999px;
-  padding: 5px 10px;
-  margin: 4px 6px 0 0;
-  font-size: 11px;
-  font-weight: bold;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.skill-tags span:hover {
+  background: #0F253B;
 }
 
 .trash-btn {
   position: absolute;
   top: 18px;
   right: 18px;
-  border: none;
-  background: transparent;
-  color: #B42318;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(185, 28, 28, 0.20);
+  background: rgba(185, 28, 28, 0.06);
+  color: #B91C1C;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
 }
 
+.trash-btn:hover {
+  background: #FEF2F2;
+  border-color: #B91C1C;
+  transform: scale(1.08);
+}
+
+/* ── ROLE MODAL ── */
 .role-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(20, 43, 70, 0.45);
+  background: rgba(15, 45, 82, 0.50);
   display: flex;
   justify-content: center;
   align-items: flex-start;
   z-index: 99999;
   padding: 40px 0;
   overflow-y: auto;
+  backdrop-filter: blur(2px);
+  animation: fadeOverlay 0.2s ease;
+}
+
+@keyframes fadeOverlay {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .role-modal {
   width: 540px;
+  max-width: 90vw;
   background: #FFFFFF;
-  border: 1px solid #C7CED8;
-  border-radius: 14px;
-  padding: 28px 30px;
+  border: 1px solid #E2EAF1;
+  border-radius: 20px;
+  padding: 32px 30px 28px;
   position: relative;
-  box-shadow: 0 20px 70px rgba(20, 43, 70, 0.3);
+  box-shadow: 0 24px 64px rgba(20, 43, 70, 0.22);
   max-height: 85vh;
   overflow-y: auto;
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .close-modal {
   position: absolute;
-  right: 22px;
-  top: 18px;
+  right: 20px;
+  top: 16px;
+  width: 32px;
+  height: 32px;
   border: none;
-  background: transparent;
-  font-size: 28px;
+  background: #F0F4F8;
+  font-size: 22px;
   cursor: pointer;
   color: #6E8096;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: all 0.2s ease;
 }
 
-.role-modal h2 {
-  margin: 0 0 8px;
-  font-size: 22px;
+.close-modal:hover {
+  background: #E2EAF1;
   color: #142B46;
 }
 
-.role-modal > p {
-  margin: 0 0 24px;
-  color: #2E435E;
+.role-modal h2 {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 800;
+  color: #0F2D52;
+  letter-spacing: -0.3px;
+}
+
+.role-modal>p {
+  margin: 0 0 22px;
+  color: #4B6882;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 .role-modal label {
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 13px;
   display: block;
   margin-bottom: 8px;
+  color: #0F2D52;
 }
 
+/* ── MODAL INPUTS ── */
 .modal-input,
 .skill-editor input[type="text"],
 .skill-editor input:not([type]) {
   width: 100%;
-  padding: 13px 14px;
-  border: 1px solid #C7CED8;
-  border-radius: 10px;
-  margin-bottom: 14px;
-  font-size: 15px;
+  padding: 11px 14px;
+  border: 1.5px solid #CBD5E1;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #142B46;
+  background: #F8FAFC;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
+.modal-input:focus,
+.skill-editor input:focus {
+  border-color: #16314D;
+  background: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(22, 49, 77, 0.10);
+}
+
+/* ── SKILLS HEADER ── */
 .skills-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+.skills-header label {
+  margin-bottom: 0;
 }
 
 .skills-header button {
-  background: white;
-  border: 1px solid #C7CED8;
+  background: #EEF3F8;
+  border: 1.5px solid #D8E4EE;
   border-radius: 10px;
-  padding: 10px 18px;
+  padding: 8px 16px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 13px;
+  color: #16314D;
+  transition: all 0.2s ease;
 }
 
+.skills-header button:hover {
+  background: #E0EAF4;
+  border-color: #8EA0B5;
+  transform: translateY(-1px);
+}
+
+/* ── SKILL EDITOR ── */
 .skill-editor {
-  background:#E9EEF4;
-  border: 1px solid #C7CED8;
-  padding: 16px;
-  border-radius: 12px;
-  margin-top: 12px;
+  background: #F4F7FA;
+  border: 1px solid #E2EAF1;
+  padding: 18px;
+  border-radius: 14px;
+  margin-top: 10px;
 }
 
 .skill-editor p {
-  font-weight: bold;
+  font-weight: 600;
   margin: 12px 0 8px;
-  color: #142B46;
+  color: #0F2D52;
+  font-size: 13px;
 }
 
 .skill-editor input[type="range"] {
-  width: 45%;
-  accent-color:  #16314D;
+  width: 100%;
+  accent-color: #16314D;
+  height: 4px;
+  cursor: pointer;
 }
 
+/* ── MODAL ACTIONS ── */
 .modal-actions {
   display: flex;
   justify-content: flex-end;
@@ -268,27 +433,38 @@
 }
 
 .cancel-role {
-  background: white;
-  border: 1px solid #C7CED8;
-  border-radius: 10px;
-  padding: 11px 22px;
+  background: #F0F4F8;
+  border: 1.5px solid #D8E4EE;
+  border-radius: 12px;
+  padding: 10px 20px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 14px;
+  color: #4B6882;
+  transition: all 0.2s ease;
 }
+
+.cancel-role:hover {
+  background: #E2EAF1;
+  border-color: #8EA0B5;
+  color: #142B46;
+}
+
+/* ── SCROLLBAR ── */
 .role-modal::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 .role-modal::-webkit-scrollbar-track {
-  background: #E9EEF4;
+  background: #F4F7FA;
   border-radius: 10px;
 }
 
 .role-modal::-webkit-scrollbar-thumb {
-  background: #16314D;
+  background: #8EA0B5;
   border-radius: 10px;
 }
 
 .role-modal::-webkit-scrollbar-thumb:hover {
-  background: #0F253B;
+  background: #16314D;
 }

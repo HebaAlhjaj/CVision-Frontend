@@ -1,77 +1,104 @@
 .team-members-page {
-  background: #DCE3E8;
-  min-height: 100vh;
-  padding: 40px 70px;
-  font-family: Arial, sans-serif;
+  padding: 8px 0 48px;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
 }
 
 .team-members-page h1 {
   font-size: 30px;
   font-weight: 800;
-  margin-bottom: 10px;
-  color:  #142B46;
+  margin: 0 0 8px;
+  color: #0F2D52;
+  letter-spacing: -0.5px;
 }
 
+.team-members-page > p {
+  font-size: 14px;
+  color: #4B6882;
+  margin: 0 0 28px;
+  line-height: 1.5;
+}
+
+/* ── MEMBERS GRID ── */
 .members-list {
-  margin-top: 30px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 22px;
+  gap: 20px;
 }
 
+/* ── MEMBER CARD ── */
 .member-card {
   background: #FFFFFF;
+  border: 1px solid #E2EAF1;
   border-radius: 18px;
-  padding: 24px;
-  transition: 0.2s ease;
-  border: 1px solid transparent;
-   box-shadow: 0 8px 24px rgba(20, 43, 70, 0.08);
+  padding: 24px 22px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  box-shadow: 0 2px 10px rgba(20,43,70,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
 .member-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   border-color: #8EA0B5;
-  box-shadow: 0 14px 32px rgba(20, 43, 70, 0.12);
+  box-shadow: 0 10px 28px rgba(20,43,70,0.11);
 }
 
+/* ── MEMBER AVATAR (CSS only) ── */
 .member-avatar {
-  width: 58px;
-  height: 58px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
-  background: #16314D;
-  color: white;
+  background: linear-gradient(135deg, #16314D 0%, #2E5280 100%);
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 16px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  box-shadow: 0 3px 10px rgba(22,49,77,0.22);
+  flex-shrink: 0;
 }
 
+/* Generate initials avatar if .member-avatar doesn't have explicit content,
+   we use the first letter of the h3 via CSS (this requires JS in JSX to set
+   the data attribute, so we just style what's there) */
+
 .member-card h3 {
-  margin: 0 0 10px;
-  font-size: 20px;
-  color: #142B46;
+  margin: 0 0 6px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #0F2D52;
+  letter-spacing: -0.2px;
 }
 
 .member-card p {
   margin: 0;
-  color: #2E435E;
-  font-size: 14px;
+  color: #4B6882;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
+/* ── STATE TEXT ── */
 .loading-text,
 .error-text,
 .empty-text {
-  margin-top: 40px;
+  margin-top: 32px;
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .error-text {
-  color: #B42318;
+  color: #B91C1C;
+  background: #FEF2F2;
+  border: 1px solid rgba(185,28,28,0.20);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: left;
 }
 
 .empty-text {
-  color:  #2E435E;
+  color: #4B6882;
 }

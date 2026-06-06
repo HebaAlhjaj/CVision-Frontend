@@ -1,50 +1,138 @@
 .role-match-page {
-  padding: 40px;
-  background: #DCE3E8;
-  min-height: 100vh;
+  padding: 8px 0 48px;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   color: #142B46;
 }
 
 .role-match-page h1 {
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 800;
+  margin: 0 0 8px;
+  color: #0F2D52;
+  letter-spacing: -0.5px;
 }
 
 .role-match-page > p {
-  color: #2E435E;
-  margin-bottom: 30px;
+  color: #4B6882;
+  margin-bottom: 28px;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
+/* ── ROLE CARD ── */
 .match-role-card {
-  background:  #FFFFFF;
-  border: 1px solid #C7CED8;
-  border-radius: 18px;
-  padding: 24px;
-  margin-bottom: 24px;
-  box-shadow: 0 8px 24px rgba(20, 43, 70, 0.08);
+  background: #FFFFFF;
+  border: 1px solid #E2EAF1;
+  border-radius: 20px;
+  padding: 26px 26px 22px;
+  margin-bottom: 22px;
+  box-shadow: 0 2px 12px rgba(20,43,70,0.07);
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.match-role-card:hover {
+  box-shadow: 0 8px 26px rgba(20,43,70,0.10);
+  border-color: #C8D5E2;
 }
 
 .match-role-card h2 {
-  margin: 0 0 12px;
-  color: #142B46;
+  margin: 0 0 14px;
+  color: #0F2D52;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+
+/* ── REQUIRED SKILLS ── */
+.required-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 18px;
 }
 
 .required-skills span {
-  display: inline-block;
-   background: #16314D;
-  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  background: #EEF3F8;
+  color: #16314D;
+  border: 1px solid #D8E4EE;
   border-radius: 999px;
-  padding: 6px 12px;
-  margin: 5px;
+  padding: 5px 14px;
   font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  transition: all 0.2s ease;
 }
 
-.candidate-card,
-.no-match {
-  background:  #E9EEF4;
-  border: 1px solid #C7CED8;
+.required-skills span:hover {
+  background: #16314D;
+  color: #FFFFFF;
+  border-color: #16314D;
+}
+
+/* ── CANDIDATE CARD ── */
+.candidate-card {
+  background: #F4F7FA;
+  border: 1px solid #E2EAF1;
   border-radius: 14px;
-  padding: 18px;
-  margin-top: 16px;
+  padding: 18px 20px;
+  margin-top: 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  text-align: left;
+}
+
+.candidate-card:hover {
+  border-color: #8EA0B5;
+  box-shadow: 0 4px 14px rgba(20,43,70,0.08);
+}
+
+.candidate-card h3 {
+  margin: 0 0 4px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #0F2D52;
+}
+
+.candidate-card p {
+  margin: 4px 0;
+  color: #4B6882;
+  font-size: 13px;
+}
+
+/* Match score highlight */
+.candidate-card p:last-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  background: #E8F5EE;
+  color: #15803D;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
+/* ── NO MATCH CARD ── */
+.no-match {
+  background: #FFF8F0;
+  border: 1px solid #FDE8CB;
+  border-radius: 14px;
+  padding: 20px;
+  margin-top: 12px;
   text-align: center;
+}
+
+.no-match strong {
+  display: block;
+  color: #92400E;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.no-match p {
+  color: #B45309;
+  font-size: 13px;
+  margin: 0;
 }
