@@ -5,7 +5,7 @@ export async function uploadCV(file, token) {
 
   formData.append("file", file);
 
-  const res = await fetch(`${BASE_URL}/cv/upload`, {
+  const res = await fetch(`${BASE_URL}/ai/analyze-cv`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
