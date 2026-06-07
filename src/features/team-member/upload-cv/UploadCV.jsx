@@ -32,33 +32,39 @@ export default function UploadCV() {
 
       console.log("CV ANALYSIS RESPONSE:", data);
 
+      const analysis = data.analysis || data;
+
       const technicalSkills =
-        data.technical_skills ||
-        data.skills ||
-        data.extracted_skills ||
+        analysis.technical_skills ||
+        analysis.skills ||
+        analysis.extracted_skills ||
         [];
 
       const skillScores =
-        data.skill_scores ||
-        data.skills_scores ||
-        data.scores ||
+        analysis.skill_scores ||
+        analysis.skills_scores ||
+        analysis.scores ||
         {};
 
       setAnalysisResult({
         fileName: file.name,
+
         technical_skills: Array.isArray(technicalSkills)
           ? technicalSkills
           : [],
+
         skill_scores: skillScores || {},
+
         suggested_role:
-          data.suggested_role ||
-          data.role ||
-          data.recommended_role ||
+          analysis.suggested_role ||
+          analysis.role ||
+          analysis.recommended_role ||
           "Unknown",
+
         experience_years:
-          data.experience_years ||
-          data.experience ||
-          data.years_of_experience ||
+          analysis.experience_years ||
+          analysis.experience ||
+          analysis.years_of_experience ||
           0,
       });
     } catch (err) {
