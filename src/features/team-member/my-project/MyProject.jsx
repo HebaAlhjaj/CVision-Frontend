@@ -131,12 +131,12 @@ export default function MyProject() {
                   <strong>My Role</strong>
                 </div>
 
-                <div className="role-desc-row">
-                  <span className="info-icon">ⓘ</span>
-                  <span>
-                    {project.role_name || "Please upload your CV for role matching"}
-                  </span>
-                </div>
+                {project.role_name && (
+                  <div className="role-desc-row">
+                    <span className="info-icon">ⓘ</span>
+                    <span>{project.role_name}</span>
+                  </div>
+                )}
               </div>
 
               <div className="cv-status-row">

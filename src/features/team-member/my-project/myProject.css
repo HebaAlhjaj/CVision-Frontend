@@ -26,7 +26,7 @@ body,
   min-height: 68px;
   background: #ffffff;
   border-bottom: 1px solid #E2EAF1;
-  box-shadow: 0 1px 4px rgba(20,43,70,0.05);
+  box-shadow: 0 1px 4px rgba(20, 43, 70, 0.05);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -53,7 +53,7 @@ body,
   justify-content: center;
   overflow: hidden;
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(20,43,70,0.20);
+  box-shadow: 0 2px 8px rgba(20, 43, 70, 0.20);
   transition: transform 0.2s ease;
 }
 
@@ -119,7 +119,7 @@ body,
   justify-content: center;
   font-size: 16px;
   font-weight: 700;
-  box-shadow: 0 2px 8px rgba(22,49,77,0.22);
+  box-shadow: 0 2px 8px rgba(22, 49, 77, 0.22);
   flex-shrink: 0;
   transition: transform 0.2s ease;
 }
@@ -209,14 +209,14 @@ body,
   font-weight: 700;
   cursor: pointer;
   transition: all 0.25s ease;
-  box-shadow: 0 2px 8px rgba(22,49,77,0.20);
+  box-shadow: 0 2px 8px rgba(22, 49, 77, 0.20);
   letter-spacing: 0.2px;
 }
 
 .join-btn:hover {
   background: #0F253B;
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(22,49,77,0.28);
+  box-shadow: 0 6px 18px rgba(22, 49, 77, 0.28);
 }
 
 .join-btn:active {
@@ -238,14 +238,14 @@ body,
   border-radius: 20px;
   padding: 22px;
   border: 1px solid #E2EAF1;
-  box-shadow: 0 2px 10px rgba(20,43,70,0.06);
+  box-shadow: 0 2px 10px rgba(20, 43, 70, 0.06);
   color: #142B46;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .tm-project-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(20,43,70,0.11);
+  box-shadow: 0 12px 32px rgba(20, 43, 70, 0.11);
   border-color: #8EA0B5;
 }
 
@@ -300,10 +300,13 @@ body,
   margin-bottom: 12px;
 }
 
+/* ✅ Modified after removing "Please upload your CV..." */
 .role-box {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 6px;
+  min-height: auto;
+  padding: 12px 14px;
 }
 
 .role-title-row,
@@ -382,14 +385,14 @@ body,
   border-radius: 20px;
   padding: 40px 28px;
   color: #142B46;
-  box-shadow: 0 2px 10px rgba(20,43,70,0.06);
+  box-shadow: 0 2px 10px rgba(20, 43, 70, 0.06);
   text-align: center;
 }
 
 .tm-message-card.error {
   color: #B91C1C;
   background: #FEF2F2;
-  border-color: rgba(185,28,28,0.15);
+  border-color: rgba(185, 28, 28, 0.15);
 }
 
 .tm-empty-icon {
@@ -422,7 +425,7 @@ body,
 .join-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15,45,82,0.50);
+  background: rgba(15, 45, 82, 0.50);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -432,8 +435,13 @@ body,
 }
 
 @keyframes fadeOverlay {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .join-modal {
@@ -441,13 +449,20 @@ body,
   background: #fff;
   border-radius: 20px;
   padding: 28px 28px 24px;
-  box-shadow: 0 20px 60px rgba(20,43,70,0.22);
+  box-shadow: 0 20px 60px rgba(20, 43, 70, 0.22);
   animation: slideUp 0.25s ease;
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(12px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0)   scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .join-modal h3 {
@@ -478,7 +493,7 @@ body,
 
 .join-row input:focus {
   border-color: #16314D;
-  box-shadow: 0 0 0 3px rgba(22,49,77,0.10);
+  box-shadow: 0 0 0 3px rgba(22, 49, 77, 0.10);
   background: #FFFFFF;
 }
 
