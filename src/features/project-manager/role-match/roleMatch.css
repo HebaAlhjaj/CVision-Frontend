@@ -71,6 +71,54 @@
   border-color: #16314D;
 }
 
+/* ── FINAL ASSIGNMENT ── */
+.final-assignment-card {
+  background: #E8F5EE;
+  border: 1px solid #BFE3CF;
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+}
+
+.final-assignment-card strong {
+  display: block;
+  color: #15803D;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.final-assignment-card p {
+  margin: 0;
+  color: #2F6B49;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.final-assignment-card.unfilled {
+  background: #FFF8F0;
+  border-color: #FDE8CB;
+}
+
+.final-assignment-card.unfilled strong {
+  color: #92400E;
+}
+
+.final-assignment-card.unfilled p {
+  color: #B45309;
+}
+
+/* ── BEST MATCH NOTE ── */
+.best-match-note {
+  background: #EEF3F8;
+  border: 1px solid #D8E4EE;
+  border-radius: 12px;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  color: #16314D;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
 /* ── CANDIDATE CARD ── */
 .candidate-card {
   background: #F4F7FA;
@@ -98,6 +146,12 @@
   margin: 4px 0;
   color: #4B6882;
   font-size: 13px;
+}
+
+.match-explanation {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #5C7691;
 }
 
 /* Match score highlight */

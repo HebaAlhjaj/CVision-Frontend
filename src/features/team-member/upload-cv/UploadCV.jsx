@@ -66,6 +66,16 @@ export default function UploadCV() {
           analysis.experience ||
           analysis.years_of_experience ||
           0,
+
+        role_experience_years:
+          analysis.role_experience_years ??
+          analysis.role_experience ??
+          null,
+
+        role_experience_reason:
+          analysis.role_experience_reason ||
+          analysis.role_reason ||
+          "",
       });
     } catch (err) {
       setError(err?.message || "Failed to upload and analyze CV");
@@ -129,21 +139,37 @@ export default function UploadCV() {
 
             {Object.keys(analysisResult.skill_scores || {}).length > 0 ? (
               Object.entries(analysisResult.skill_scores).map(
-                ([skill, score], index) => (
-                  <div className="skill-item" key={index}>
-                    <div className="skill-top">
-                      <span>{skill}</span>
-                      <span>{score}/100</span>
-                    </div>
+                ([skill, detail], index) => {
+                  // The API returns either a bare number or an object
+                  // like { score, years_experience, explanation }.
+                  // Always reduce to a safe numeric score before rendering.
+                  const rawScore =
+                    detail && typeof detail === "object"
+                      ? detail.score
+                      : detail;
 
-                    <div className="skill-bar">
-                      <div
-                        className="skill-fill"
-                        style={{ width: `${score}%` }}
-                      ></div>
+                  const numericScore = Number(rawScore);
+
+                  const score = Number.isFinite(numericScore)
+                    ? Math.min(100, Math.max(0, numericScore))
+                    : 0;
+
+                  return (
+                    <div className="skill-item" key={index}>
+                      <div className="skill-top">
+                        <span>{skill}</span>
+                        <span>{score}/100</span>
+                      </div>
+
+                      <div className="skill-bar">
+                        <div
+                          className="skill-fill"
+                          style={{ width: `${score}%` }}
+                        ></div>
+                      </div>
                     </div>
-                  </div>
-                )
+                  );
+                }
               )
             ) : analysisResult.technical_skills.length > 0 ? (
               <div className="skills-list">
@@ -167,6 +193,20 @@ export default function UploadCV() {
           <p>
             <strong>Experience:</strong> {analysisResult.experience_years} years
           </p>
+
+          {analysisResult.role_experience_years !== null &&
+            analysisResult.role_experience_years !== undefined && (
+              <p>
+                <strong>Relevant Experience:</strong>{" "}
+                {analysisResult.role_experience_years} years
+              </p>
+            )}
+
+          {analysisResult.role_experience_reason && (
+            <p>
+              <strong>Reason:</strong> {analysisResult.role_experience_reason}
+            </p>
+          )}
         </div>
       )}
     </main>

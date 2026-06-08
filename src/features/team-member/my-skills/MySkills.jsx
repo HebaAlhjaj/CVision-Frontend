@@ -119,6 +119,10 @@ export default function MySkills() {
                         style={{ width: `${skill.score}%` }}
                       />
                     </div>
+
+                    {skill.explanation && (
+                      <p className="skill-explanation">{skill.explanation}</p>
+                    )}
                   </div>
                 ))}
               </div>
@@ -156,6 +160,10 @@ export default function MySkills() {
                         style={{ width: `${skill.score}%` }}
                       />
                     </div>
+
+                    {skill.explanation && (
+                      <p className="skill-explanation">{skill.explanation}</p>
+                    )}
                   </div>
                 ))}
               </div>

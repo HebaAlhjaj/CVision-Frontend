@@ -44,11 +44,36 @@ export default function RoleMatch() {
             ))}
           </div>
 
+          {role.recommended_member ? (
+            <div className="final-assignment-card">
+              <strong>
+                Final Assignment: {role.recommended_member.name} (
+                {role.recommended_member.match_score}%)
+              </strong>
+              <p>{role.recommended_member.explanation}</p>
+            </div>
+          ) : (
+            role.matches?.length > 0 && (
+              <div className="final-assignment-card unfilled">
+                <strong>No final assignment yet for this role</strong>
+                <p>
+                  The strongest candidates below were already assigned to a
+                  role that suits them better.
+                </p>
+              </div>
+            )
+          )}
+
+          {role.best_match_note && (
+            <p className="best-match-note">{role.best_match_note}</p>
+          )}
+
           {role.matches?.length > 0 ? (
             role.matches.map((match) => (
               <div className="candidate-card" key={match.user_id}>
                 <h3>{match.name}</h3>
                 <p>{match.email}</p>
+                <p className="match-explanation">{match.explanation}</p>
                 <p>Match Score: {match.match_score}%</p>
               </div>
             ))
