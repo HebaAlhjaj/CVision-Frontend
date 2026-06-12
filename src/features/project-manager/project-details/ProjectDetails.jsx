@@ -103,11 +103,8 @@ export default function ProjectDetails() {
     if (!ok) return;
 
     try {
-      if (token) {
-        await deleteRole(roleId, token);
-      }
-
-      setRoles((prev) => prev.filter((role) => role.role_id !== roleId));
+      await deleteRole(roleId, token);
+      await fetchRoles();
     } catch (err) {
       alert(err.message || "Failed to delete role");
     }
