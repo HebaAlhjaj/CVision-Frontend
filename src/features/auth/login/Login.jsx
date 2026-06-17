@@ -48,6 +48,8 @@ export default function Login() {
         res.full_name || res.name || res.username || ""
       );
 
+      localStorage.setItem("email", trimmedEmail);
+
       if (res.role === "PM") {
         navigate("/project-manager/my-project", { replace: true });
       } else {

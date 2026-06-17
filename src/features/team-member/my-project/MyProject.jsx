@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./myProject.css";
 import { getMyProjects } from "./myProject.service";
+import { Users, Calendar, Briefcase, FileText } from "lucide-react";
 
 export default function MyProject() {
   const [projects, setProjects] = useState([]);
@@ -111,50 +112,61 @@ export default function MyProject() {
         <section className="tm-projects-list">
           {projects.map((project) => (
             <div className="tm-project-card" key={project.project_id}>
-              <div className="project-card-top">
-                <div className="project-folder-icon">📁</div>
-                <span className="project-status">Active</span>
+
+              {/* ── Card Header ── */}
+              <div className="card-header">
+                <div className="card-avatar">
+                  {(project.project_name || project.name || "P").charAt(0).toUpperCase()}
+                </div>
+                <div className="card-header-info">
+                  <h3 className="card-name">{project.project_name || project.name}</h3>
+                  <span className="active-badge">● Active</span>
+                </div>
               </div>
 
-              <h3 className="project-title">
-                {project.project_name || project.name}
-              </h3>
-
-              <p className="project-desc">
-                {project.description ||
-                  "Building a modern e-commerce platform with React and Node.js"}
-              </p>
-
-              <div className="project-info-box role-box">
-                <div className="role-title-row">
-                  <span className="role-icon">♟</span>
-                  <strong>My Role</strong>
+              {/* ── Card Body ── */}
+              {project.description && (
+                <div className="card-body">
+                  <p className="card-desc">{project.description}</p>
                 </div>
+              )}
 
+              {/* ── Stats ── */}
+              <div className="card-stats">
                 {project.role_name && (
-                  <div className="role-desc-row">
-                    <span className="info-icon">ⓘ</span>
-                    <span>{project.role_name}</span>
+                  <div className="card-stat-item">
+                    <div className="card-stat-icon stat-icon-roles">
+                      <Briefcase size={13} />
+                    </div>
+                    <span className="card-stat-value">{project.role_name}</span>
+                    <span className="card-stat-label">My Role</span>
                   </div>
                 )}
-              </div>
-
-              <div className="cv-status-row">
-                <span>CV Status :</span>
-                <b>{project.cv_status || "Not Uploaded"}</b>
-              </div>
-
-              <div className="project-info-box members-box">
-                <div className="members-row">
-                  <span>▣</span>
-                  <strong>{project.team_members_count || 1} Team Member</strong>
+                <div className="card-stat-item">
+                  <div className="card-stat-icon stat-icon-members">
+                    <Users size={13} />
+                  </div>
+                  <span className="card-stat-value">{project.team_members_count ?? 1}</span>
+                  <span className="card-stat-label">Team Members</span>
                 </div>
-
-                <div className="members-row">
-                  <span>♟</span>
-                  <strong>Started {project.start_date || "15/1/2025"}</strong>
+                {project.start_date && (
+                  <div className="card-stat-item">
+                    <div className="card-stat-icon stat-icon-date">
+                      <Calendar size={13} />
+                    </div>
+                    <span className="card-stat-value">{project.start_date}</span>
+                    <span className="card-stat-label">Started</span>
+                  </div>
+                )}
+                <div className="card-stat-item">
+                  <div className="card-stat-icon stat-icon-cv">
+                    <FileText size={13} />
+                  </div>
+                  <span className="card-stat-value">{project.cv_status || "Not Uploaded"}</span>
+                  <span className="card-stat-label">CV Status</span>
                 </div>
               </div>
+
             </div>
           ))}
         </section>

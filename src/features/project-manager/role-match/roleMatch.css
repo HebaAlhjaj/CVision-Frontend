@@ -1,7 +1,13 @@
 .role-match-page {
   padding: 8px 0 48px;
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   color: #142B46;
+  animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .role-match-page h1 {
@@ -19,6 +25,37 @@
   line-height: 1.5;
 }
 
+/* ── LOADING / NO DATA ── */
+.loading-card,
+.no-data-card {
+  background: #FFFFFF;
+  border: 1px solid #E2EAF1;
+  border-radius: 20px;
+  padding: 48px 32px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(20,43,70,0.06);
+  font-size: 14px;
+  color: #4B6882;
+}
+
+.no-data-icon {
+  font-size: 36px;
+  margin-bottom: 14px;
+}
+
+.no-data-card h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0F2D52;
+}
+
+.no-data-card p {
+  margin: 0;
+  font-size: 13px;
+  color: #6E8096;
+}
+
 /* ── ROLE CARD ── */
 .match-role-card {
   background: #FFFFFF;
@@ -31,14 +68,18 @@
 }
 
 .match-role-card:hover {
-  box-shadow: 0 8px 26px rgba(20,43,70,0.10);
+  box-shadow: 0 8px 28px rgba(20,43,70,0.11);
   border-color: #C8D5E2;
 }
 
+.role-card-header {
+  margin-bottom: 18px;
+}
+
 .match-role-card h2 {
-  margin: 0 0 14px;
+  margin: 0 0 12px;
   color: #0F2D52;
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 800;
   letter-spacing: -0.3px;
 }
@@ -47,8 +88,7 @@
 .required-skills {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
-  margin-bottom: 18px;
+  gap: 6px;
 }
 
 .required-skills span {
@@ -58,11 +98,11 @@
   color: #16314D;
   border: 1px solid #D8E4EE;
   border-radius: 999px;
-  padding: 5px 14px;
+  padding: 4px 13px;
   font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.2px;
+  font-weight: 600;
   transition: all 0.2s ease;
+  letter-spacing: 0.1px;
 }
 
 .required-skills span:hover {
@@ -71,40 +111,214 @@
   border-color: #16314D;
 }
 
-/* ── FINAL ASSIGNMENT ── */
-.final-assignment-card {
+/* ── SCORE BADGES ── */
+.score-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.score-badge.small {
+  padding: 3px 10px;
+  font-size: 11px;
+}
+
+.badge-excellent {
   background: #E8F5EE;
-  border: 1px solid #BFE3CF;
-  border-radius: 14px;
-  padding: 16px 20px;
-  margin-bottom: 14px;
-}
-
-.final-assignment-card strong {
-  display: block;
   color: #15803D;
-  font-size: 14px;
-  margin-bottom: 4px;
+  border: 1px solid #BFE3CF;
 }
 
-.final-assignment-card p {
+.badge-good {
+  background: #EEF3F8;
+  color: #16314D;
+  border: 1px solid #C8D9EC;
+}
+
+.badge-low {
+  background: #FFF8F0;
+  color: #92400E;
+  border: 1px solid #FDE8CB;
+}
+
+.badge-fair {
+  background: #FFF8F0;
+  color: #B45309;
+  border: 1px solid #FDE8CB;
+}
+
+.badge-weak {
+  background: #FEF2F2;
+  color: #B91C1C;
+  border: 1px solid #FECACA;
+}
+
+/* ── MATCHED / MISSING SKILL CHIPS ── */
+.matched-skills-chips,
+.missing-skills-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  margin: 8px 0 4px;
+}
+
+.missing-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #92400E;
+  margin-right: 2px;
+  flex-shrink: 0;
+}
+
+.skill-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.chip-expert {
+  background: #EDE9FE;
+  color: #5B21B6;
+  border: 1px solid #C4B5FD;
+}
+
+.chip-proficient {
+  background: #DBEAFE;
+  color: #1D4ED8;
+  border: 1px solid #BFDBFE;
+}
+
+.chip-basic {
+  background: #F0FAF4;
+  color: #166534;
+  border: 1px solid #BBF7D0;
+}
+
+.chip-missing {
+  background: #FFF8F0;
+  color: #92400E;
+  border: 1px solid #FDE8CB;
+}
+
+/* ── OTHER CANDIDATE INFO ── */
+.other-candidate-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.other-matched-count {
+  font-size: 12px;
+  color: #6E8096;
+  font-weight: 500;
+}
+
+/* ── FINAL ASSIGNMENT CARD ── */
+.final-assignment-card {
+  background: linear-gradient(135deg, #E8F5EE 0%, #F0FAF4 100%);
+  border: 1px solid #BFE3CF;
+  border-radius: 16px;
+  padding: 20px 22px;
+  margin-bottom: 16px;
+}
+
+.final-assignment-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* ── FINAL AVATAR (initials) ── */
+.final-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #16314D 0%, #2E5280 100%);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  font-weight: 700;
+  flex-shrink: 0;
+  box-shadow: 0 3px 10px rgba(22,49,77,0.22);
+  letter-spacing: 0.5px;
+}
+
+.final-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.final-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.final-name {
+  font-size: 17px;
+  font-weight: 800;
+  color: #0F2D52;
+  letter-spacing: -0.2px;
+}
+
+.recommended-label {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #15803D;
+  margin-bottom: 8px;
+}
+
+.final-explanation {
   margin: 0;
   color: #2F6B49;
   font-size: 13px;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
+/* ── UNFILLED ASSIGNMENT ── */
 .final-assignment-card.unfilled {
   background: #FFF8F0;
   border-color: #FDE8CB;
 }
 
+.unfilled-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.unfilled-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
 .final-assignment-card.unfilled strong {
+  display: block;
   color: #92400E;
+  font-size: 14px;
+  margin-bottom: 4px;
 }
 
 .final-assignment-card.unfilled p {
+  margin: 0;
   color: #B45309;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 /* ── BEST MATCH NOTE ── */
@@ -119,53 +333,46 @@
   line-height: 1.5;
 }
 
-/* ── CANDIDATE CARD ── */
-.candidate-card {
+/* ── OTHER CANDIDATES SECTION ── */
+.other-candidates-section {
+  margin-top: 4px;
+}
+
+.other-candidates-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #7A92A8;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin: 0 0 10px;
+}
+
+.other-candidates-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.other-candidate-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
   background: #F4F7FA;
   border: 1px solid #E2EAF1;
-  border-radius: 14px;
-  padding: 18px 20px;
-  margin-top: 12px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  text-align: left;
+  border-radius: 10px;
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 
-.candidate-card:hover {
+.other-candidate-row:hover {
   border-color: #8EA0B5;
-  box-shadow: 0 4px 14px rgba(20,43,70,0.08);
+  background: #EEF3F8;
 }
 
-.candidate-card h3 {
-  margin: 0 0 4px;
-  font-size: 15px;
+.other-name {
+  font-size: 14px;
   font-weight: 700;
   color: #0F2D52;
-}
-
-.candidate-card p {
-  margin: 4px 0;
-  color: #4B6882;
-  font-size: 13px;
-}
-
-.match-explanation {
-  font-size: 12.5px;
-  line-height: 1.5;
-  color: #5C7691;
-}
-
-/* Match score highlight */
-.candidate-card p:last-child {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 8px;
-  background: #E8F5EE;
-  color: #15803D;
-  font-weight: 700;
-  font-size: 12px;
-  padding: 4px 12px;
-  border-radius: 999px;
 }
 
 /* ── NO MATCH CARD ── */

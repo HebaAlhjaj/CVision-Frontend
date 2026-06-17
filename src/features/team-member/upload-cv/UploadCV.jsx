@@ -46,7 +46,7 @@ export default function UploadCV() {
         analysis.scores ||
         {};
 
-      setAnalysisResult({
+      const resultObj = {
         fileName: file.name,
 
         technical_skills: Array.isArray(technicalSkills)
@@ -76,7 +76,22 @@ export default function UploadCV() {
           analysis.role_experience_reason ||
           analysis.role_reason ||
           "",
-      });
+      };
+
+      setAnalysisResult(resultObj);
+
+      // Persist analysis summary so MySkills can display it
+      localStorage.setItem("cv_analysis", JSON.stringify({
+        suggested_role: resultObj.suggested_role,
+        experience_years: resultObj.experience_years,
+        role_experience_years: resultObj.role_experience_years,
+        role_experience_reason: resultObj.role_experience_reason,
+        soft_skills: analysis.soft_skills || [],
+        tools: analysis.tools || [],
+        certifications: analysis.certifications || [],
+        languages: analysis.languages || [],
+        analyzed_at: new Date().toISOString(),
+      }));
     } catch (err) {
       setError(err?.message || "Failed to upload and analyze CV");
     } finally {
