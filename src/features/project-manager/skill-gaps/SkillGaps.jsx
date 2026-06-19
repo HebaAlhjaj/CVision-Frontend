@@ -51,34 +51,33 @@ export default function SkillGaps() {
     if (!projectId || !token) return;
 
     const run = async () => {
-      /* ── 1. Skill-gap data (existing) ── */
+      const headers = { Authorization: `Bearer ${token}` };
+
+      /* ── 1. Fetch skill-gap, matching, and members in parallel ── */
+      let matching = [];
+      let members = [];
+
       try {
-        const res = await fetch(
-          `http://127.0.0.1:8000/projects/${projectId}/skill-gap`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        setData(await res.json());
+        const [sgRes, matchRes, membersRes] = await Promise.all([
+          fetch(`http://127.0.0.1:8000/projects/${projectId}/skill-gap`, { headers }),
+          fetch(`http://127.0.0.1:8000/projects/${projectId}/matching`, { headers }),
+          fetch(`http://127.0.0.1:8000/projects/${projectId}/members`, { headers }),
+        ]);
+
+        if (sgRes.ok) setData(await sgRes.json());
+        matching = matchRes.ok ? await matchRes.json() : [];
+        members = membersRes.ok ? await membersRes.json() : [];
       } catch (err) {
         console.log(err);
       }
 
-      /* ── 2. Matching + members in parallel ── */
+      if (!Array.isArray(matching) || !Array.isArray(members)) {
+        setRecsLoading(false);
+        return;
+      }
+
+      /* ── 2. Identify unfilled roles and unassigned members ── */
       try {
-        const [matchRes, membersRes] = await Promise.all([
-          fetch(`http://127.0.0.1:8000/projects/${projectId}/matching`,
-                { headers: { Authorization: `Bearer ${token}` } }),
-          fetch(`http://127.0.0.1:8000/projects/${projectId}/members`,
-                { headers: { Authorization: `Bearer ${token}` } }),
-        ]);
-
-        const matching = matchRes.ok  ? await matchRes.json()  : [];
-        const members  = membersRes.ok ? await membersRes.json() : [];
-        if (!Array.isArray(matching) || !Array.isArray(members)) {
-          setRecsLoading(false);
-          return;
-        }
-
-        /* ── 3. Identify unfilled roles and unassigned members ── */
         const unfilledRoles = matching.filter((r) => !r.recommended_member);
         const assignedNames = new Set(
           matching
@@ -92,14 +91,14 @@ export default function SkillGaps() {
           return;
         }
 
-        /* ── 4. Fetch skills for each unassigned member ── */
+        /* ── 3. Fetch skills for each unassigned member ── */
         const skillsMap = {};
         await Promise.all(
           unassigned.map(async (m) => {
             try {
               const res = await fetch(
                 `http://127.0.0.1:8000/projects/${projectId}/members/${m.user_id}/skills`,
-                { headers: { Authorization: `Bearer ${token}` } }
+                { headers }
               );
               skillsMap[m.user_id] = res.ok ? (await res.json()).skills || [] : [];
             } catch {
@@ -108,13 +107,12 @@ export default function SkillGaps() {
           })
         );
 
-        /* ── 5. Compute best candidate per unfilled role ── */
+        /* ── 4. Compute best candidate per unfilled role ── */
         const recs = [];
         for (const role of unfilledRoles) {
           const required = role.required_skills || [];
           if (!required.length) continue;
 
-          // Prefer members who already have some matching skills
           const scored = unassigned.map((member) => ({
             member,
             ...computeMatchPotential(required, skillsMap[member.user_id] || []),
