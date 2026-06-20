@@ -53,20 +53,21 @@ export default function SkillGaps() {
     const run = async () => {
       const headers = { Authorization: `Bearer ${token}` };
 
-      /* ── 1. Fetch skill-gap, matching, and members in parallel ── */
       let matching = [];
       let members = [];
 
       try {
-        const [sgRes, matchRes, membersRes] = await Promise.all([
-          fetch(`http://127.0.0.1:8000/projects/${projectId}/skill-gap`, { headers }),
-          fetch(`http://127.0.0.1:8000/projects/${projectId}/matching`, { headers }),
-          fetch(`http://127.0.0.1:8000/projects/${projectId}/members`, { headers }),
-        ]);
+        const res = await fetch(
+          `http://127.0.0.1:8000/projects/${projectId}/full-data`,
+          { headers }
+        );
 
-        if (sgRes.ok) setData(await sgRes.json());
-        matching = matchRes.ok ? await matchRes.json() : [];
-        members = membersRes.ok ? await membersRes.json() : [];
+        if (res.ok) {
+          const fullData = await res.json();
+          setData(fullData.skill_gap);
+          matching = fullData.matching || [];
+          members = fullData.members || [];
+        }
       } catch (err) {
         console.log(err);
       }

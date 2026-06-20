@@ -67,7 +67,7 @@ export default function TeamMembers() {
   useEffect(() => {
     fetchMembers();
     fetchMatching();
-  }, [projectId]);
+  }, [projectId, token]);
 
   function getMemberRoleInfo(member) {
     for (const role of matching) {
